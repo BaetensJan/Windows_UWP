@@ -6,9 +6,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Beige">
 
     <Grid>
-
+        <Border>
+            <SplitView x:Name="SplitView" CompactPaneLength="50" IsPaneOpen="False" DisplayMode="CompactOverlay">
+                <SplitView.Pane>
+                    <RelativePanel>
+                        <StackPanel RelativePanel.AlignTopWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                            <Button x:Name="closeButton" FontFamily="Segoe MDL2 Assets" Background="Transparent" Content="&#xE700;" Width="50" Height="50"/>
+                        </StackPanel>
+                        <StackPanel RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True">
+                            <StackPanel Orientation="Horizontal">
+                                <Button FontFamily="Segoe MDL2 Assets" Background="Transparent" Content="&#xE77B;" Width="50" Height="50"/>
+                                <TextBlock Text=" Login / Registreer" FontSize="18" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </RelativePanel>
+                </SplitView.Pane>
+                <SplitView.Content>
+                    <Frame x:Name="MainFrame"/>
+                </SplitView.Content>
+            </SplitView>
+        </Border>
     </Grid>
 </Page>

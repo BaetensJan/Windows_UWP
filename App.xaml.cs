@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -21,8 +22,20 @@ namespace Windows_UWP
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application
+    sealed partial class App : Application, INotifyPropertyChanged
     {
+
+        private string _JWTToken;
+        public string JWTToken {
+            get { return _JWTToken; }
+            set {
+                _JWTToken = value;
+                // Call OnPropertyChanged whenever the property is updated
+                OnPropertyChanged(_JWTToken);
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -31,6 +44,13 @@ namespace Windows_UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+        }
+
+
+        // Create the OnPropertyChanged method to raise the event
+        protected void OnPropertyChanged(string token)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(token));
         }
 
         /// <summary>
@@ -67,7 +87,7 @@ namespace Windows_UWP
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
-                    rootFrame.Navigate(typeof(RegisterView), e.Arguments);
+                    rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
                 // Ensure the current window is active
                 Window.Current.Activate();

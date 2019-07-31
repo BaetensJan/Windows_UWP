@@ -6,8 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    RequestedTheme="Light"
-    Background="Beige">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -63,9 +63,9 @@
 
                         <TextBlock Text="Business Name" Grid.Row="0"/>
                         <TextBox Text="{x:Bind RegisterViewModel.Business.Name, Mode=TwoWay}" Grid.Column="1" Grid.Row="0" x:Name="businessName" />
-                        <TextBlock Text="Business Name" Grid.Row="0"/>
+                        <TextBlock Text="Business Address" Grid.Row="1"/>
                         <TextBox Text="{x:Bind RegisterViewModel.Business.Address, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" x:Name="businessAddress" />
-                        <TextBlock Text="What type of business?" Grid.Row="1"/>
+                        <TextBlock Text="What type of business?" Grid.Row="2"/>
                         <ComboBox SelectionChanged="BusinessType_SelectionChanged" Grid.Column="1" Grid.Row="2" x:Name="businessType" />
                     </Grid>
                     <Button Content="Submit" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SubmitOnClick"/>

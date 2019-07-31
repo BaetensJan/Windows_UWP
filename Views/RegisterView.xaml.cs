@@ -1,20 +1,10 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-using Windows_UWP.Entities;
 using Windows_UWP.Enums;
 using Windows_UWP.ViewModels;
 
@@ -66,16 +56,18 @@ namespace Windows_UWP.Views
 
         private async void SubmitOnClick(object sender, RoutedEventArgs e)
         {
-            //            try
-            //            {
-            var userJson = JsonConvert.SerializeObject(RegisterViewModel);
-            HttpClient client = new HttpClient();
-            var res = await client.PostAsync(apiUrl, new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
-            //            }
-            //            catch (Exception ex)
-            //            {
-
-            //            }
+            try
+            {
+                var userJson = JsonConvert.SerializeObject(RegisterViewModel);
+                HttpClient client = new HttpClient();
+                var res = await client.PostAsync(apiUrl, new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
+                (App.Current as App).JWTToken = await res.Content.ReadAsStringAsync();
+                Frame.GoBack();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }
