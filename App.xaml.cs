@@ -31,7 +31,7 @@ namespace Windows_UWP
             set {
                 _JWTToken = value;
                 // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged(_JWTToken);
+                OnPropertyChanged("JWTToken");
             }
         }
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,9 +48,9 @@ namespace Windows_UWP
 
 
         // Create the OnPropertyChanged method to raise the event
-        protected void OnPropertyChanged(string token)
+        public void OnPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(token));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         /// <summary>

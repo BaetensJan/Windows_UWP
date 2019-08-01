@@ -20,16 +20,18 @@
         </Grid.RowDefinitions>
         <TextBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
         <ComboBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
-        <GridView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{x:Bind Items}"
+        <GridView Grid.Row="1" Grid.ColumnSpan="3" x:Name="PlacesGridView"
           IsItemClickEnabled="True"
           IsSwipeEnabled="False"
           CanDragItems="False"
-          SelectionMode="Single"
-          ItemClick="Control1_ItemClick">
-
+          SelectionMode="Single">
             <GridView.ItemTemplate>
                 <DataTemplate>
-
+                    <StackPanel Margin="20">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Address}" TextWrapping="NoWrap"/>
+                        <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                    </StackPanel>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

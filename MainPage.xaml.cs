@@ -34,12 +34,26 @@ namespace Windows_UWP
 
         private void MainPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            Frame myFrame = MainFrame.Content as Frame;
-            if (myFrame.CanGoBack)
+            if (MainFrame.CanGoBack)
             {
                 e.Handled = true;
-                myFrame.GoBack();
+                MainFrame.GoBack();
             }
+        }
+
+        private void OnCloseButtonTapped(object sender, RoutedEventArgs e)
+        {
+            SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
+        }
+
+        private void OnLoginButtonTapped(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(LoginView));
+        }
+
+        private void OnPlacesButtonTapped(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(PlacesView));
         }
     }
 }
