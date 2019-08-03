@@ -36,7 +36,7 @@ namespace Windows_UWP.Views
                 var userJson = JsonConvert.SerializeObject(LoginViewModel);
                 HttpClient client = new HttpClient();
                 var res = await client.PostAsync(apiUrl, new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
-                (App.Current as App).JWTToken = await res.Content.ReadAsStringAsync();
+                ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken = await res.Content.ReadAsStringAsync();
             }
             catch (Exception ex)
             {
@@ -46,6 +46,7 @@ namespace Windows_UWP.Views
 
         private void CreateAccountOnClick(object sender, RoutedEventArgs e)
         {
+            ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken = null;
             Frame.Navigate(typeof(RegisterView));
         }
     }

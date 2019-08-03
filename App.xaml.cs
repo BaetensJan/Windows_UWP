@@ -22,20 +22,8 @@ namespace Windows_UWP
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    sealed partial class App : Application, INotifyPropertyChanged
+    sealed partial class App : Application
     {
-
-        private string _JWTToken;
-        public string JWTToken {
-            get { return _JWTToken; }
-            set {
-                _JWTToken = value;
-                // Call OnPropertyChanged whenever the property is updated
-                OnPropertyChanged("JWTToken");
-            }
-        }
-        public event PropertyChangedEventHandler PropertyChanged;
-
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -44,13 +32,6 @@ namespace Windows_UWP
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-        }
-
-
-        // Create the OnPropertyChanged method to raise the event
-        public void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         /// <summary>

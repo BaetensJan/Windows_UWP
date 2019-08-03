@@ -24,7 +24,8 @@
           IsItemClickEnabled="True"
           IsSwipeEnabled="False"
           CanDragItems="False"
-          SelectionMode="Single">
+          SelectionMode="Single"
+          ItemClick="PlacesGridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="20">

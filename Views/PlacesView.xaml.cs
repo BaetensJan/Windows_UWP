@@ -46,5 +46,12 @@ namespace Windows_UWP.Views
             Console.WriteLine("Hey! Hey! Listen! A property of a chatter in my list has changed!");
             PlacesGridView.ItemsSource = PlacesViewModel.Items;
         }
+
+        private void PlacesGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            GridView listView = (GridView)sender;
+            var clickedMenuItem = (Business)e.ClickedItem;
+            Frame.Navigate(typeof(PlaceView), clickedMenuItem);
+        }
     }
 }

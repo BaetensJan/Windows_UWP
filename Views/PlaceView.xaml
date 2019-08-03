@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="Windows_UWP.Views.PlaceView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Windows_UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="9*" />
+            <ColumnDefinition Width="9*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="9*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <Image Grid.Row="1" Grid.Column="1">
+            <Image.Source>
+                <BitmapImage UriSource="{x:Bind BusinessViewModel.ImageUri, Mode=OneWay}"/>
+            </Image.Source>
+        </Image>
+        <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
+            <TextBlock Text="{x:Bind BusinessViewModel.Name, Mode=OneWay}" TextWrapping="NoWrap"/>
+            <TextBlock Text="{x:Bind BusinessViewModel.Type, Mode=OneWay}" TextWrapping="NoWrap"/>
+            <TextBlock Text="{x:Bind BusinessViewModel.Address, Mode=OneWay}" TextWrapping="NoWrap"/>
+        </StackPanel>
+    </Grid>
+</Page>

@@ -126,6 +126,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserSettings.cs" />
+    <Compile Include="Utils\InverseBooleanToVisibilityConverter.cs" />
+    <Compile Include="Utils\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModels\BusinessViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PlacesViewModel.cs" />
@@ -135,6 +138,9 @@
     </Compile>
     <Compile Include="Views\PlacesView.xaml.cs">
       <DependentUpon>PlacesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlaceView.xaml.cs">
+      <DependentUpon>PlaceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterView.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
@@ -172,6 +178,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\PlaceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\RegisterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -185,9 +195,7 @@
       <Version>12.0.2</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utils\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

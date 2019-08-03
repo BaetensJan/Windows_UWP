@@ -61,7 +61,7 @@ namespace Windows_UWP.Views
                 var userJson = JsonConvert.SerializeObject(RegisterViewModel);
                 HttpClient client = new HttpClient();
                 var res = await client.PostAsync(apiUrl, new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
-                (App.Current as App).JWTToken = await res.Content.ReadAsStringAsync();
+                ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken = await res.Content.ReadAsStringAsync();
                 Frame.GoBack();
             }
             catch (Exception ex)

@@ -24,8 +24,10 @@ namespace Windows_UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
         public MainPage()
         {
+            Application.Current.Resources["UserSettings"] = new UserSettings();
             this.InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Enabled;
             MainFrame.Navigate(typeof(LoginView));
@@ -46,6 +48,14 @@ namespace Windows_UWP
             SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
         }
 
+        private void OnBackButtonTapped(object sender, RoutedEventArgs e)
+        {
+            if (MainFrame.CanGoBack)
+            {
+                MainFrame.GoBack();
+            }
+        }
+
         private void OnLoginButtonTapped(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(typeof(LoginView));
@@ -54,6 +64,11 @@ namespace Windows_UWP
         private void OnPlacesButtonTapped(object sender, RoutedEventArgs e)
         {
             MainFrame.Navigate(typeof(PlacesView));
+        }
+
+        private void OnLogoutButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(LoginView));
         }
     }
 }

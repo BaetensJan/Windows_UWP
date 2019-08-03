@@ -8,5 +8,6 @@ namespace Windows_UWP.Entities
         public string Name { get; set; }
         public BusinessType Type { get; set; }
         public string Address { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
