@@ -16,7 +16,7 @@ namespace Windows_UWP
             get { return _JWTToken; }
             set {
                 _JWTToken = value;
-                IsLoggedIn = (value != null || value.Length != 0);
+                IsLoggedIn = (value != null && value.Length != 0);
                 OnPropertyChanged();
             }
         }

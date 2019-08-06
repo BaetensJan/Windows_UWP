@@ -43,7 +43,6 @@ namespace Windows_UWP.Views
 
         private void ItemListener(object sender, PropertyChangedEventArgs e)
         {
-            Console.WriteLine("Hey! Hey! Listen! A property of a chatter in my list has changed!");
             PlacesGridView.ItemsSource = PlacesViewModel.Items;
         }
 

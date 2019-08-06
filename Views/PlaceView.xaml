@@ -31,5 +31,21 @@
             <TextBlock Text="{x:Bind BusinessViewModel.Type, Mode=OneWay}" TextWrapping="NoWrap"/>
             <TextBlock Text="{x:Bind BusinessViewModel.Address, Mode=OneWay}" TextWrapping="NoWrap"/>
         </StackPanel>
+        <GridView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="EventsGridView"
+                  IsItemClickEnabled="True"
+                  IsSwipeEnabled="False"
+                  CanDragItems="False"
+                  SelectionMode="Single"
+                  ItemClick="EventsGridView_ItemClick">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="20">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                        <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
     </Grid>
 </Page>

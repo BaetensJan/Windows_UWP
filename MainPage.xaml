@@ -35,6 +35,10 @@
                                 <Button FontFamily="Segoe MDL2 Assets" Background="Transparent" Content="&#xE77B;" Width="50" Height="50"/>
                                 <TextBlock Text=" Login" FontSize="18" VerticalAlignment="Center"/>
                             </StackPanel>
+                            <StackPanel Orientation="Horizontal" Tapped="OnEditPlaceButtonTapped" Visibility="{Binding IsLoggedIn, Source={StaticResource UserSettings}, Converter={StaticResource BooleanToVisibilityConverterKey}}">
+                                <Button FontFamily="Segoe MDL2 Assets" Background="Transparent" Content="&#xE70F;" Width="50" Height="50"/>
+                                <TextBlock Text=" Edit My Business" FontSize="18" VerticalAlignment="Center"/>
+                            </StackPanel>
                             <StackPanel Orientation="Horizontal" Tapped="OnLogoutButtonTapped" Visibility="{Binding IsLoggedIn, Source={StaticResource UserSettings}, Converter={StaticResource BooleanToVisibilityConverterKey}}">
                                 <Button FontFamily="Segoe MDL2 Assets" Background="Transparent" Content="&#xE726;" Width="50" Height="50"/>
                                 <TextBlock Text=" Logout" FontSize="18" VerticalAlignment="Center"/>

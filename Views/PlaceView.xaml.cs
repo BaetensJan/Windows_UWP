@@ -26,12 +26,12 @@ namespace Windows_UWP.Views
     /// </summary>
     public sealed partial class PlaceView : Page
     {
-        private string apiUrl = "http://localhost:5000/business/";
         public BusinessViewModel BusinessViewModel { get; set; } = new BusinessViewModel();
 
         public PlaceView()
         {
             this.InitializeComponent();
+            EventsGridView.ItemsSource = BusinessViewModel.Events;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -47,6 +47,11 @@ namespace Windows_UWP.Views
             {
 
             }
+        }
+
+        private void EventsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

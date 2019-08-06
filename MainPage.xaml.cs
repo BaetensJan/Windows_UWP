@@ -68,7 +68,14 @@ namespace Windows_UWP
 
         private void OnLogoutButtonTapped(object sender, TappedRoutedEventArgs e)
         {
+            ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken = null;
+            Frame.BackStack.Clear();
             MainFrame.Navigate(typeof(LoginView));
+        }
+
+        private void OnEditPlaceButtonTapped(object sender, TappedRoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(EditPlaceView));
         }
     }
 }

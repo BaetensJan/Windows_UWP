@@ -1,0 +1,68 @@
+﻿<Page
+    x:Class="Windows_UWP.Views.EditPlaceView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Windows_UWP.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="5*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer Grid.Row="1" Grid.Column="1">
+            <StackPanel Spacing="20">
+                <TextBlock Text="Edit Place" />
+                <Grid x:Name="businessPanel" Grid.Row="3" Grid.ColumnSpan="2" RowSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Text="Business Name" Grid.Row="0"/>
+                    <TextBox Text="{x:Bind EditPlaceViewModel.BusinessViewModel.Name, Mode=TwoWay}" Grid.Column="1" Grid.Row="0" x:Name="businessName" />
+                    <TextBlock Text="Business Address" Grid.Row="1"/>
+                    <TextBox Text="{x:Bind EditPlaceViewModel.BusinessViewModel.Address, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" x:Name="businessAddress" />
+                    <TextBlock Text="What type of business?" Grid.Row="2"/>
+                    <ComboBox SelectionChanged="BusinessType_SelectionChanged" Grid.Column="1" Grid.Row="2" x:Name="businessType" SelectedItem="{x:Bind EditPlaceViewModel.BusinessViewModel.Type, Mode=TwoWay}"/>
+                    <Button Content="Submit" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SubmitOnClick"/>
+                </Grid>
+                <GridView x:Name="EventsGridView"
+                  IsItemClickEnabled="True"
+                  IsSwipeEnabled="False"
+                  CanDragItems="False"
+                  SelectionMode="Single"
+                  ItemClick="EventsGridView_ItemClick">
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="20">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+                <Button>Remove</Button>
+                <Button>Add New Event</Button>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
