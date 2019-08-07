@@ -61,7 +61,30 @@
                     </GridView.ItemTemplate>
                 </GridView>
                 <Button>Remove</Button>
-                <Button>Add New Event</Button>
+
+                <Grid RowSpacing="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">Add New Event</TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="1">Name</TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="2" x:Name="EventName" Text="{x:Bind EventViewModel.Name, Mode=TwoWay}"></TextBox>
+                    <TextBlock Grid.Row="2" Grid.Column="1">Type</TextBlock>
+                    <TextBox Grid.Row="2" Grid.Column="2" x:Name="EventType" Text="{x:Bind EventViewModel.Type, Mode=TwoWay}"></TextBox>
+                    <TextBlock Grid.Row="3" Grid.Column="1">Description</TextBlock>
+                    <TextBox Grid.Row="3" Grid.Column="2" x:Name="EventDescription" Text="{x:Bind EventViewModel.Description, Mode=TwoWay}"></TextBox>
+                    <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Click="OnAddNewEventButton" HorizontalAlignment="Center">Add New Event</Button>
+                </Grid>
             </StackPanel>
         </ScrollViewer>
     </Grid>

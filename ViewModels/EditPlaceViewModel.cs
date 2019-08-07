@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
@@ -45,6 +46,25 @@ namespace Windows_UWP.ViewModels
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+            }
+        }
+
+        public async Task SaveTaskAsync()
+        {
+            try
+            {
+                var token = ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken;
+
+
+                var json = JsonConvert.SerializeObject(BusinessViewModel);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue("Bearer", token);
+                var res = await client.PostAsync($"{apiUrl}/Edit", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            }
+            catch (Exception ex)
+            {
+
             }
         }
     }

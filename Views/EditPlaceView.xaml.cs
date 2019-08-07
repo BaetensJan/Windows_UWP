@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Windows_UWP.Views
     public sealed partial class EditPlaceView : Page
     {
         public EditPlaceViewModel EditPlaceViewModel { get; set; } = new EditPlaceViewModel();
-
+        public EventViewModel EventViewModel { get; set; } = new EventViewModel();
         public EditPlaceView()
         {
             this.InitializeComponent();
@@ -45,7 +46,7 @@ namespace Windows_UWP.Views
 
         private void ItemListener(object sender, PropertyChangedEventArgs e)
         {
-            EventsGridView.ItemsSource = EditPlaceViewModel.BusinessViewModel.Events;
+            EventsGridView.ItemsSource = new ObservableCollection<EventViewModel>(EditPlaceViewModel.BusinessViewModel.Events);
         }
 
         private void BusinessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -74,6 +75,19 @@ namespace Windows_UWP.Views
         {
 
 
+        }
+
+        private async void OnAddNewEventButton(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                EditPlaceViewModel.BusinessViewModel.Events.Add(EventViewModel);
+                await EditPlaceViewModel.SaveTaskAsync();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
     }
 }
