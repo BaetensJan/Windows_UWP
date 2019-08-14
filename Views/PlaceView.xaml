@@ -13,6 +13,7 @@
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="9*" />
             <ColumnDefinition Width="9*" />
+            <ColumnDefinition Width="9*"/>
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -30,6 +31,9 @@
             <TextBlock Text="{x:Bind BusinessViewModel.Name, Mode=OneWay}" TextWrapping="NoWrap"/>
             <TextBlock Text="{x:Bind BusinessViewModel.Type, Mode=OneWay}" TextWrapping="NoWrap"/>
             <TextBlock Text="{x:Bind BusinessViewModel.Address, Mode=OneWay}" TextWrapping="NoWrap"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
+            <Button x:Name="subscribeButton" Click="Subscribe"></Button>
         </StackPanel>
         <GridView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="EventsGridView"
                   IsItemClickEnabled="True"

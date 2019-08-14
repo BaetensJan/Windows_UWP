@@ -27,6 +27,8 @@ namespace Windows_UWP.Views
     public sealed partial class PlaceView : Page
     {
         public BusinessViewModel BusinessViewModel { get; set; } = new BusinessViewModel();
+        public UserBusinessViewModel UserBusinessViewModel { get; set; } = new UserBusinessViewModel();
+        public Business business;
 
         public PlaceView()
         {
@@ -34,14 +36,17 @@ namespace Windows_UWP.Views
             EventsGridView.ItemsSource = BusinessViewModel.Events;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             try
             {
-                var business = (Business)e.Parameter;
+                business = (Business)e.Parameter;
                 business.ImageUrl = "https://fashiongrabber.blob.core.windows.net/shop-2659/IMG_2953.JPG";
                 BusinessViewModel.ParseBusiness(business);
+                UserBusinessViewModel.BusinessId = business.Id;
+                await UserBusinessViewModel.CheckUserBusinessForSubscribtion();
+                checkSubscribeButton();                
             }
             catch (Exception ex)
             {
@@ -52,6 +57,25 @@ namespace Windows_UWP.Views
         private void EventsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        private async void Subscribe(object sender, RoutedEventArgs e)
+        {
+            UserBusinessViewModel.BusinessId = business.Id;
+            await UserBusinessViewModel.Subscribe();
+            checkSubscribeButton();
+        }
+
+        private void checkSubscribeButton()
+        {
+            if (UserBusinessViewModel.substatus)
+            {
+                subscribeButton.Content = "Unsubscribe";
+            }
+            else
+            {
+                subscribeButton.Content = "Subscribe";
+            }
         }
     }
 }
