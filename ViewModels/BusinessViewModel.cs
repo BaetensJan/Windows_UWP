@@ -14,6 +14,7 @@ namespace Windows_UWP.ViewModels
         public BusinessType Type { get; set; } = BusinessType.Winkel;
         public string Address { get; set; }
         public List<EventViewModel> Events { get; set; } = new List<EventViewModel>();
+        public List<PromotionViewModel> Promotions { get; set; } = new List<PromotionViewModel>();
         public string ImageUrl { get; set; }
         public Uri ImageUri { get; set; }
 
@@ -32,6 +33,16 @@ namespace Windows_UWP.ViewModels
                     Name = ev.Name,
                     Description = ev.Description,
                     Type = ev.Type
+                });
+            }
+            foreach(var promotion in business.Promotions)
+            {
+                Promotions.Add(new PromotionViewModel()
+                {
+                    Id = promotion.Id,
+                    Name = promotion.Name,
+                    Description = promotion.Description,
+                    PromotionType = promotion.PromotionType
                 });
             }
         }

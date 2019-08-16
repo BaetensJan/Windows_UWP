@@ -67,5 +67,43 @@ namespace Windows_UWP.ViewModels
 
             }
         }
+
+        public async Task AddEventToBusiness()
+        {
+            try
+            {
+                var token = ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken;
+
+
+                var json = JsonConvert.SerializeObject(BusinessViewModel);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue("Bearer", token);
+                var res = await client.PostAsync($"{apiUrl}/AddEvents", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public async Task AddPromotionToBusiness()
+        {
+            try
+            {
+                var token = ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken;
+
+
+                var json = JsonConvert.SerializeObject(BusinessViewModel);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue("Bearer", token);
+
+                var res = await client.PostAsync($"{apiUrl}/AddPromotion", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }

@@ -120,8 +120,10 @@
     </Compile>
     <Compile Include="Entities\Business.cs" />
     <Compile Include="Entities\Event.cs" />
+    <Compile Include="Entities\Promotion.cs" />
     <Compile Include="Enums\BusinessType.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Enums\PromotionType.cs" />
     <Compile Include="Enums\UserType.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -136,6 +138,7 @@
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PlacesViewModel.cs" />
+    <Compile Include="ViewModels\PromotionViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="ViewModels\UserBusinessViewModel.cs" />
     <Compile Include="Views\EditPlaceView.xaml.cs">
