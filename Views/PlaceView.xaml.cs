@@ -42,11 +42,13 @@ namespace Windows_UWP.Views
             try
             {
                 business = (Business)e.Parameter;
+
+                //TODO: CHANGE THIS
                 business.ImageUrl = "https://fashiongrabber.blob.core.windows.net/shop-2659/IMG_2953.JPG";
                 BusinessViewModel.ParseBusiness(business);
                 UserBusinessViewModel.BusinessId = business.Id;
                 await UserBusinessViewModel.CheckUserBusinessForSubscribtion();
-                checkSubscribeButton();                
+                checkSubscribeButton();
             }
             catch (Exception ex)
             {
@@ -54,9 +56,9 @@ namespace Windows_UWP.Views
             }
         }
 
-        private void EventsGridView_ItemClick(object sender, ItemClickEventArgs e)
+        private void GridViewItem_Tapped(object sender, TappedRoutedEventArgs e)
         {
-
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
         }
 
         private async void Subscribe(object sender, RoutedEventArgs e)

@@ -5,9 +5,12 @@
     xmlns:local="using:Windows_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utils="using:Windows_UWP.Utils"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.Resources>
+        <utils:BooleanToSubscribeConverter x:Key="BooleanToSubscribeConverter"/>
+    </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -33,17 +36,25 @@
             <TextBlock Text="{x:Bind BusinessViewModel.Address, Mode=OneWay}" TextWrapping="NoWrap"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
-            <Button x:Name="subscribeButton" Click="Subscribe"></Button>
+            <Button Content="{Binding substatus, Source=UserBusinessViewModel, Converter={StaticResource BooleanToSubscribeConverter}}" x:Name="subscribeButton" Click="Subscribe"></Button>
         </StackPanel>
         <GridView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="EventsGridView"
                   IsItemClickEnabled="True"
                   IsSwipeEnabled="False"
                   CanDragItems="False"
-                  SelectionMode="Single"
-                  ItemClick="EventsGridView_ItemClick">
+                  SelectionMode="Single">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="20">
+                    <StackPanel Margin="20" Width="200" Height="80" Tapped="GridViewItem_Tapped">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                    <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                                    <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
+                                </StackPanel>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
                         <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
                         <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
                         <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
