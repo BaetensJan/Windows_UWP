@@ -35,7 +35,7 @@ namespace Windows_UWP.ViewModels
                     Type = ev.Type
                 });
             }
-            foreach(var promotion in business.Promotions)
+            foreach (var promotion in business.Promotions)
             {
                 Promotions.Add(new PromotionViewModel()
                 {
