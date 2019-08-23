@@ -8,27 +8,23 @@ using Windows_UWP.Enums;
 
 namespace Windows_UWP.ViewModels
 {
-    public class PromotionViewModel
+    public class PromotionViewModel : INotifyPropertyChanged
     {
         public int Id { get; set; }
         private string _name;
-        public string Name
-        {
+        public string Name {
             get { return _name; }
-            set
-            {
+            set {
                 _name = value;
-                NotifyPropertyChanged("Name");
+                OnPropertyChanged("Name");
             }
         }
         private PromotionType _promotionType;
-        public PromotionType PromotionType
-        {
+        public PromotionType PromotionType {
             get { return _promotionType; }
-            set
-            {
+            set {
                 _promotionType = value;
-                NotifyPropertyChanged("PromotionType");
+                OnPropertyChanged("PromotionType");
             }
         }
 
@@ -37,28 +33,24 @@ namespace Windows_UWP.ViewModels
             get { return _startAndEndDate; }
             set {
                 _startAndEndDate = value;
-                NotifyPropertyChanged("StartAndEndDate");
+                OnPropertyChanged("StartAndEndDate");
             }
         }
         public string _description;
-        public string Description
-        {
+
+        public string Description {
             get { return _description; }
-            set
-            {
+            set {
                 _description = value;
-                NotifyPropertyChanged("Description");
+                OnPropertyChanged("Description");
             }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        private void NotifyPropertyChanged(String propertyName)
+
+        protected void OnPropertyChanged(string name)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if(null != handler)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

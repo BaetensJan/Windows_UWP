@@ -93,12 +93,17 @@ namespace Windows_UWP.Views
 
         private void EventsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            EventViewModel = (EventViewModel)EventsGridView.SelectedItem;
+            GridView listView = (GridView)sender;
+            var clickedMenuItem = (EventViewModel)e.ClickedItem;
+            EventViewModel.Id = clickedMenuItem.Id;
+            EventViewModel.Name = clickedMenuItem.Name;
+            EventViewModel.Description = clickedMenuItem.Description;
+            EventViewModel.Type = clickedMenuItem.Type;
         }
 
         private async void RemoveSelectedEvent(object sender, RoutedEventArgs e)
         {
-            var removeEvent = (EventViewModel) EventsGridView.SelectedItem;
+            var removeEvent = (EventViewModel)EventsGridView.SelectedItem;
             await EditPlaceViewModel.RemoveEventFromBusiness(removeEvent);
 
             EditPlaceViewModel.BusinessViewModel.Events.Remove(removeEvent);
@@ -107,7 +112,7 @@ namespace Windows_UWP.Views
 
         private async void RemoveSelectedPromotion(object sender, RoutedEventArgs e)
         {
-            var removePromotion = (PromotionViewModel) PromotionsGridView.SelectedItem;
+            var removePromotion = (PromotionViewModel)PromotionsGridView.SelectedItem;
             await EditPlaceViewModel.RemovePromotionFromBusiness(removePromotion);
 
             EditPlaceViewModel.BusinessViewModel.Promotions.Remove(removePromotion);
@@ -143,7 +148,13 @@ namespace Windows_UWP.Views
 
         private void PromotionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            PromotionViewModel = (PromotionViewModel) PromotionsGridView.SelectedItem;
+            GridView listView = (GridView)sender;
+            var clickedMenuItem = (PromotionViewModel)e.ClickedItem;
+            PromotionViewModel.Id = clickedMenuItem.Id;
+            PromotionViewModel.Name = clickedMenuItem.Name;
+            PromotionViewModel.Description = clickedMenuItem.Description;
+            PromotionViewModel.PromotionType = clickedMenuItem.PromotionType;
+            PromotionViewModel.StartAndEndDate = clickedMenuItem.StartAndEndDate;
         }
 
         #region Map Methods
@@ -240,6 +251,6 @@ namespace Windows_UWP.Views
         }
         #endregion
 
-        
+
     }
 }
