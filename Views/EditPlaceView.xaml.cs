@@ -12,7 +12,6 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Navigation;
 using Windows_UWP.Enums;
 using Windows_UWP.ViewModels;
-using Microsoft.Toolkit.Uwp;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -94,8 +93,24 @@ namespace Windows_UWP.Views
 
         private void EventsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            EventViewModel = (EventViewModel)EventsGridView.SelectedItem;
+        }
 
+        private async void RemoveSelectedEvent(object sender, RoutedEventArgs e)
+        {
+            var removeEvent = (EventViewModel) EventsGridView.SelectedItem;
+            await EditPlaceViewModel.RemoveEventFromBusiness(removeEvent);
 
+            EditPlaceViewModel.BusinessViewModel.Events.Remove(removeEvent);
+
+        }
+
+        private async void RemoveSelectedPromotion(object sender, RoutedEventArgs e)
+        {
+            var removePromotion = (PromotionViewModel) PromotionsGridView.SelectedItem;
+            await EditPlaceViewModel.RemovePromotionFromBusiness(removePromotion);
+
+            EditPlaceViewModel.BusinessViewModel.Promotions.Remove(removePromotion);
         }
 
         private async void OnAddEventButton(object sender, RoutedEventArgs e)
@@ -128,7 +143,7 @@ namespace Windows_UWP.Views
 
         private void PromotionsGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            PromotionViewModel = (PromotionViewModel) PromotionsGridView.SelectedItem;
         }
 
         #region Map Methods
@@ -224,5 +239,7 @@ namespace Windows_UWP.Views
             }
         }
         #endregion
+
+        
     }
 }

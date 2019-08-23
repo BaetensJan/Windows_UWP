@@ -12,6 +12,7 @@ namespace Windows_UWP.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public PromotionType PromotionType { get; set; }
+        public string StartAndEndDate { get; set; }
         public string Description { get; set; }
     }
 }

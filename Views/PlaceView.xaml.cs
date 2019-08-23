@@ -38,8 +38,9 @@ namespace Windows_UWP.Views
         {
             this.InitializeComponent();
             BingMap.Loaded += Map_Loaded;
-
+            PromotionsGridView.ItemsSource = BusinessViewModel.Promotions;
             EventsGridView.ItemsSource = BusinessViewModel.Events;
+            
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
