@@ -5,6 +5,8 @@
     xmlns:local="using:Windows_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -20,9 +22,8 @@
             <RowDefinition Height="8*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-
         <ScrollViewer Grid.Row="1" Grid.Column="1">
-            <StackPanel Spacing="20">
+            <StackPanel Spacing="20" Margin="20">
                 <TextBlock Text="Edit Place" />
                 <Grid x:Name="businessPanel" Grid.Row="3" Grid.ColumnSpan="2" RowSpacing="10">
                     <Grid.ColumnDefinitions>
@@ -32,6 +33,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="400"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
@@ -39,10 +42,33 @@
                     <TextBlock Text="Business Name" Grid.Row="0"/>
                     <TextBox Text="{x:Bind EditPlaceViewModel.BusinessViewModel.Name, Mode=TwoWay}" Grid.Column="1" Grid.Row="0" x:Name="businessName" />
                     <TextBlock Text="Business Address" Grid.Row="1"/>
-                    <TextBox Text="{x:Bind EditPlaceViewModel.BusinessViewModel.Address, Mode=TwoWay}" Grid.Column="1" Grid.Row="1" x:Name="businessAddress" />
-                    <TextBlock Text="What type of business?" Grid.Row="2"/>
-                    <ComboBox SelectionChanged="BusinessType_SelectionChanged" Grid.Column="1" Grid.Row="2" x:Name="businessType" SelectedItem="{x:Bind EditPlaceViewModel.BusinessViewModel.Type, Mode=TwoWay}"/>
-                    <Button Content="Submit" Grid.Row="4" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SubmitOnClick"/>
+                    <Grid ColumnSpacing="10" Grid.Row="1" Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBox Grid.Column="0" x:Name="searchRequest"/>
+                        <Button Grid.Column="1" Click="SearchOnClick">Search</Button>
+                    </Grid>
+                    <Maps:MapControl
+                               Grid.Row="2" Grid.Column="1"
+                               x:Name="BingMap"
+                               Style="Terrain"                          
+                               ZoomInteractionMode="GestureAndControl"  
+                               TiltInteractionMode="GestureAndControl" 
+                               MapServiceToken="tIdxWzAAjyJLLvKRLUMW~C_ipKmhoGhucVZ24LHNjXw~Aoj7cCRdHVB98ZGHHmIrWex6V7YLB41OEKiT5uF5bA0clqU3NCm45QCo-yXPFIv4"  
+                               ZoomLevel="8"
+                               MapDoubleTapped="MapOnDoubleClick"/>
+                    <StackPanel Grid.Row="3" Grid.Column="1">
+                        <TextBox IsEnabled="False" Text="{x:Bind EditPlaceViewModel.BusinessViewModel.Address, Mode=TwoWay}" x:Name="businessAddress" />
+                        <TextBlock x:Name="AddressValidationMessage" FontSize="10" Foreground="Red" Text="Your business must have an address, please add it by searching for the location or double clicking on the map" Visibility="Collapsed"/>
+                    </StackPanel>
+                    <TextBlock Text="What type of business?" Grid.Row="4"/>
+                    <ComboBox SelectionChanged="BusinessType_SelectionChanged" Grid.Column="1" Grid.Row="4" x:Name="businessType" SelectedItem="{x:Bind EditPlaceViewModel.BusinessViewModel.Type, Mode=TwoWay}"/>
+                    <Button Content="Save Changes" Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="SubmitOnClick"/>
                 </Grid>
                 <GridView x:Name="EventsGridView"
                   IsItemClickEnabled="True"
@@ -127,5 +153,12 @@
                 </Grid>
             </StackPanel>
         </ScrollViewer>
+        <controls:InAppNotification Grid.Row="2" Grid.ColumnSpan="3" x:Name="Notification">
+            <controls:InAppNotification.ContentTemplate>
+                <DataTemplate>
+                    <TextBlock>Changes Successfully Updated</TextBlock>
+                </DataTemplate>
+            </controls:InAppNotification.ContentTemplate>
+        </controls:InAppNotification>
     </Grid>
 </Page>

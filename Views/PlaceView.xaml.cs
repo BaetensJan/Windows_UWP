@@ -5,10 +5,13 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Services.Maps;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
@@ -29,10 +32,13 @@ namespace Windows_UWP.Views
         public BusinessViewModel BusinessViewModel { get; set; } = new BusinessViewModel();
         public UserBusinessViewModel UserBusinessViewModel { get; set; } = new UserBusinessViewModel();
         public Business business;
+        private BasicGeoposition gentLocation = new BasicGeoposition { Latitude = 51.05, Longitude = 3.71666667 };
 
         public PlaceView()
         {
             this.InitializeComponent();
+            BingMap.Loaded += Map_Loaded;
+
             EventsGridView.ItemsSource = BusinessViewModel.Events;
         }
 
@@ -49,6 +55,7 @@ namespace Windows_UWP.Views
                 UserBusinessViewModel.BusinessId = business.Id;
                 await UserBusinessViewModel.CheckUserBusinessForSubscribtion();
                 checkSubscribeButton();
+                GeocodePoint(BusinessViewModel.Address);
             }
             catch (Exception ex)
             {
@@ -79,5 +86,56 @@ namespace Windows_UWP.Views
                 subscribeButton.Content = "Subscribe";
             }
         }
+
+        #region Map Methods
+        private async void Map_Loaded(object sender, RoutedEventArgs e)
+        {
+            Geopoint gentPoint = new Geopoint(gentLocation);
+            await BingMap.TrySetSceneAsync(MapScene.CreateFromLocationAndRadius(gentPoint, 5000));
+        }
+
+        private async void AddMarker(Geopoint geopoint)
+        {
+            var marker = new MapIcon
+            {
+                Location = geopoint,
+                NormalizedAnchorPoint = new Point(0.5, 1.0),
+                ZIndex = 0,
+                Title = "Your Shop"
+            };
+            var locationMarkers = new List<MapElement>();
+
+            locationMarkers.Add(marker);
+            var markersLayer = new MapElementsLayer
+            {
+                ZIndex = 1,
+                MapElements = locationMarkers
+            };
+            BingMap.Layers.Clear();
+            BingMap.Layers.Add(markersLayer);
+            await BingMap.TrySetSceneAsync(MapScene.CreateFromLocationAndRadius(geopoint, 5000));
+        }
+
+        private async void GeocodePoint(string addressToGeocode)
+        {
+            try
+            {
+                Geopoint hintPoint = new Geopoint(gentLocation);
+                MapLocationFinderResult result =
+                    await MapLocationFinder.FindLocationsAsync(addressToGeocode, hintPoint, 1);
+
+                // If the query returns results, display the name of the town
+                // contained in the address of the first result.
+                if (result.Status == MapLocationFinderStatus.Success && result.Locations.Count >= 0)
+                {
+                    AddMarker(result.Locations[0].Point);
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+        #endregion
     }
 }

@@ -6,12 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utils="using:Windows_UWP.Utils"
+    xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.Resources>
         <utils:BooleanToSubscribeConverter x:Key="BooleanToSubscribeConverter"/>
+        <utils:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Page.Resources>
-    <Grid>
+    <Grid ColumnSpacing="10" RowSpacing="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="9*" />
@@ -31,36 +33,58 @@
             </Image.Source>
         </Image>
         <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Vertical">
-            <TextBlock Text="{x:Bind BusinessViewModel.Name, Mode=OneWay}" TextWrapping="NoWrap"/>
-            <TextBlock Text="{x:Bind BusinessViewModel.Type, Mode=OneWay}" TextWrapping="NoWrap"/>
-            <TextBlock Text="{x:Bind BusinessViewModel.Address, Mode=OneWay}" TextWrapping="NoWrap"/>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Name: " FontWeight="Bold"/>
+                <TextBlock Text="{x:Bind BusinessViewModel.Name, Mode=OneWay}" TextWrapping="NoWrap"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Type of business: " FontWeight="Bold"/>
+                <TextBlock Text="{x:Bind BusinessViewModel.Type, Mode=OneWay}" TextWrapping="NoWrap"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <TextBlock Text="Address: " FontWeight="Bold"/>
+                <TextBlock Text="{x:Bind BusinessViewModel.Address, Mode=OneWay}" TextWrapping="NoWrap"/>
+            </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical">
-            <Button Content="{Binding substatus, Source=UserBusinessViewModel, Converter={StaticResource BooleanToSubscribeConverter}}" x:Name="subscribeButton" Click="Subscribe"></Button>
+        <Maps:MapControl Grid.Row="1" Grid.Column="3"
+                               x:Name="BingMap"
+                               Style="Terrain"                          
+                               ZoomInteractionMode="GestureAndControl"  
+                               TiltInteractionMode="GestureAndControl" 
+                               MapServiceToken="tIdxWzAAjyJLLvKRLUMW~C_ipKmhoGhucVZ24LHNjXw~Aoj7cCRdHVB98ZGHHmIrWex6V7YLB41OEKiT5uF5bA0clqU3NCm45QCo-yXPFIv4"  
+                               ZoomLevel="8"/>
+        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" Visibility="{Binding IsLoggedIn, Source={StaticResource UserSettings}, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Button Content="{Binding UserBusinessViewModel.substatus, Converter={StaticResource BooleanToSubscribeConverter}}" x:Name="subscribeButton" Click="Subscribe"></Button>
         </StackPanel>
-        <GridView Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" x:Name="EventsGridView"
+        <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  Orientation="Vertical" Spacing="10">
+        <TextBlock Text="Events: " FontWeight="Bold"/>
+        <GridView x:Name="EventsGridView"
                   IsItemClickEnabled="True"
                   IsSwipeEnabled="False"
                   CanDragItems="False"
                   SelectionMode="Single">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="20" Width="200" Height="80" Tapped="GridViewItem_Tapped">
-                        <FlyoutBase.AttachedFlyout>
-                            <Flyout>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                                    <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
-                                    <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
-                                </StackPanel>
-                            </Flyout>
-                        </FlyoutBase.AttachedFlyout>
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
-                        <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
-                    </StackPanel>
-                </DataTemplate>
+                        <Border BorderThickness="1" BorderBrush="LightGray">
+                            <StackPanel Margin="10" Width="200" Height="80" Tapped="GridViewItem_Tapped">
+                                <FlyoutBase.AttachedFlyout>
+                                    <Flyout>
+                                        <StackPanel>
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                                            <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
+                                        </StackPanel>
+                                    </Flyout>
+                                </FlyoutBase.AttachedFlyout>
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+        </StackPanel>
+
     </Grid>
 </Page>

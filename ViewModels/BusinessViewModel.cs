@@ -25,25 +25,31 @@ namespace Windows_UWP.ViewModels
             Address = business.Address;
             ImageUrl = business.ImageUrl;
             ImageUri = new Uri(business.ImageUrl);
-            foreach (var ev in business.Events)
+            if (business.Events != null)
             {
-                Events.Add(new EventViewModel()
+                foreach (var ev in business.Events)
                 {
-                    Id = ev.Id,
-                    Name = ev.Name,
-                    Description = ev.Description,
-                    Type = ev.Type
-                });
+                    Events.Add(new EventViewModel()
+                    {
+                        Id = ev.Id,
+                        Name = ev.Name,
+                        Description = ev.Description,
+                        Type = ev.Type
+                    });
+                }
             }
-            foreach (var promotion in business.Promotions)
+            if (business.Promotions != null)
             {
-                Promotions.Add(new PromotionViewModel()
+                foreach (var promotion in business.Promotions)
                 {
-                    Id = promotion.Id,
-                    Name = promotion.Name,
-                    Description = promotion.Description,
-                    PromotionType = promotion.PromotionType
-                });
+                    Promotions.Add(new PromotionViewModel()
+                    {
+                        Id = promotion.Id,
+                        Name = promotion.Name,
+                        Description = promotion.Description,
+                        PromotionType = promotion.PromotionType
+                    });
+                }
             }
         }
     }

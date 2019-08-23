@@ -10,7 +10,6 @@ namespace Windows_UWP
 {
     public class UserSettings : INotifyPropertyChanged
     {
-
         private string _JWTToken;
         public string JWTToken {
             get { return _JWTToken; }
@@ -28,6 +27,7 @@ namespace Windows_UWP
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Margin="20" ColumnSpacing="10" RowSpacing="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="1*" />
@@ -16,11 +16,19 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
             <RowDefinition Height="9*" />
         </Grid.RowDefinitions>
-        <TextBox SelectionChanged="FilterOnChanged" x:Name="businessName" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-        <ComboBox x:Name="businessType" SelectionChanged="FilterOnChanged" Width="150" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" />
-        <GridView Grid.Row="1" Grid.ColumnSpan="3" x:Name="PlacesGridView"
+        <TextBlock Grid.ColumnSpan="3" Grid.Row="0" FontSize="24" HorizontalAlignment="Center">Places</TextBlock>
+        <StackPanel Grid.Row="1" Grid.Column="0">
+            <TextBlock>Filter by name:</TextBlock>
+            <TextBox SelectionChanged="FilterOnChanged" x:Name="businessName" VerticalAlignment="Center" PlaceholderText="Kinepolis"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock>Filter by category:</TextBlock>
+            <ComboBox x:Name="businessType" SelectionChanged="FilterOnChanged" Width="150"  VerticalAlignment="Center"/>
+        </StackPanel>
+        <GridView Grid.Row="2" Grid.ColumnSpan="3" x:Name="PlacesGridView"
           IsItemClickEnabled="True"
           IsSwipeEnabled="False"
           CanDragItems="False"
@@ -28,11 +36,13 @@
           ItemClick="PlacesGridView_ItemClick">
             <GridView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="20">
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                        <TextBlock Text="{Binding Address}" TextWrapping="NoWrap"/>
-                        <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
-                    </StackPanel>
+                    <Border BorderThickness="1" BorderBrush="LightGray">
+                        <StackPanel Margin="20" Width="200" Height="80">
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding Address}" TextWrapping="NoWrap"/>
+                            <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                        </StackPanel>
+                    </Border>
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
