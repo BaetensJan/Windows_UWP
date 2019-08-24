@@ -35,6 +35,7 @@ namespace Windows_UWP.ViewModels
                 OnPropertyChanged("Description");
             }
         }
+        public DateTime Creation { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

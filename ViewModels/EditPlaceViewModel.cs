@@ -140,5 +140,43 @@ namespace Windows_UWP.ViewModels
 
             }
         }
+        public async Task EditPromotion(PromotionViewModel promotionViewModel)
+        {
+            try
+            {
+                var token = ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken;
+
+
+                var json = JsonConvert.SerializeObject(promotionViewModel);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue("Bearer", token);
+
+                var res = await client.PostAsync($"{apiUrl}/EditPromotion", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+        public async Task EditEvent(EventViewModel eventViewModel)
+        {
+            try
+            {
+                var token = ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken;
+
+
+                var json = JsonConvert.SerializeObject(eventViewModel);
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue("Bearer", token);
+
+                var res = await client.PostAsync($"{apiUrl}/EditEvent", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
     }
 }

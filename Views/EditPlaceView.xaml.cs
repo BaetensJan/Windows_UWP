@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Navigation;
 using Windows_UWP.Enums;
 using Windows_UWP.ViewModels;
+ 
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -122,6 +123,7 @@ namespace Windows_UWP.Views
         {
             try
             {
+                EventViewModel.Creation = DateTime.UtcNow;
                 EditPlaceViewModel.BusinessViewModel.Events.Add(EventViewModel);
 
                 await EditPlaceViewModel.AddEventToBusiness();
@@ -136,9 +138,11 @@ namespace Windows_UWP.Views
         {
             try
             {
-
+                PromotionViewModel.Creation = DateTime.UtcNow;
                 EditPlaceViewModel.BusinessViewModel.Promotions.Add(PromotionViewModel);
                 await EditPlaceViewModel.AddPromotionToBusiness();
+
+                
             }
             catch (Exception ex)
             {
@@ -155,8 +159,33 @@ namespace Windows_UWP.Views
             PromotionViewModel.Description = clickedMenuItem.Description;
             PromotionViewModel.PromotionType = clickedMenuItem.PromotionType;
             PromotionViewModel.StartAndEndDate = clickedMenuItem.StartAndEndDate;
+            promotionType.SelectedItem = clickedMenuItem.PromotionType;
         }
 
+        private async void EditPromotion(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await EditPlaceViewModel.EditPromotion(PromotionViewModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+        private async void EditEvent(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await EditPlaceViewModel.EditEvent(EventViewModel);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+
+        
+        }
         #region Map Methods
         private async void Map_Loaded(object sender, RoutedEventArgs e)
         {
@@ -250,7 +279,6 @@ namespace Windows_UWP.Views
             }
         }
         #endregion
-
 
     }
 }

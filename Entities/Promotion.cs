@@ -14,5 +14,6 @@ namespace Windows_UWP.Entities
         public PromotionType PromotionType { get; set; }
         public string StartAndEndDate { get; set; }
         public string Description { get; set; }
+        public DateTime Creation { get; set; }
     }
 }

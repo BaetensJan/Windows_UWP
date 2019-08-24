@@ -19,7 +19,7 @@ namespace Windows_UWP.ViewModels
                 OnPropertyChanged("Name");
             }
         }
-        private PromotionType _promotionType;
+        private PromotionType _promotionType = PromotionType.Andere;
         public PromotionType PromotionType {
             get { return _promotionType; }
             set {
@@ -45,6 +45,7 @@ namespace Windows_UWP.ViewModels
                 OnPropertyChanged("Description");
             }
         }
+        public DateTime Creation { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

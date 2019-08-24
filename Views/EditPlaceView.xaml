@@ -110,6 +110,7 @@
                     <TextBlock Grid.Row="3" Grid.Column="1">Description</TextBlock>
                     <TextBox Grid.Row="3" Grid.Column="2" x:Name="EventDescription" Text="{x:Bind EventViewModel.Description, Mode=TwoWay}"></TextBox>
                     <Button Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Click="OnAddEventButton" HorizontalAlignment="Center">Add New Event</Button>
+                    <Button Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Click="EditEvent" HorizontalAlignment="Center">Edit event</Button>
                 </Grid>
                 <GridView x:Name="PromotionsGridView"
                   IsItemClickEnabled="True"
@@ -147,12 +148,13 @@
                     <TextBlock Grid.Row="1" Grid.Column="1">Name</TextBlock>
                     <TextBox Grid.Row="1" Grid.Column="2" x:Name="PromotionName" Text="{x:Bind PromotionViewModel.Name, Mode=TwoWay}"></TextBox>
                     <TextBlock Grid.Row="2" Grid.Column="1">Type</TextBlock>
-                    <ComboBox SelectionChanged="PromotionType_SelectionChanged" Grid.Column="2" Grid.Row="2" x:Name="promotionType" />
+                    <ComboBox SelectionChanged="PromotionType_SelectionChanged" Grid.Column="2" Grid.Row="2" x:Name="promotionType"/>
                     <TextBlock Grid.Row="3" Grid.Column="1"> Start - end Date</TextBlock>
                     <TextBox Grid.Row="3" Grid.Column="2" x:Name="PromotionDates" Text="{x:Bind PromotionViewModel.StartAndEndDate, Mode=TwoWay}"></TextBox>
                     <TextBlock Grid.Row="4" Grid.Column="1">Description</TextBlock>
                     <TextBox Grid.Row="4" Grid.Column="2" x:Name="PromotionDescription" Text="{x:Bind PromotionViewModel.Description, Mode=TwoWay}"></TextBox>
                     <Button Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Click="OnAddPromotionButton" HorizontalAlignment="Center">Add New Promotion</Button>
+                    <Button Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Click="EditPromotion" HorizontalAlignment="Center">Edit promotion</Button>
                 </Grid>
             </StackPanel>
         </ScrollViewer>
