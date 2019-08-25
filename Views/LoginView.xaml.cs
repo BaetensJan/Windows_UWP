@@ -16,7 +16,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows_UWP.ViewModels;
 using Windows.UI.Notifications;
-using Microsoft.Toolkit.Uwp.Notifications; 
+using Microsoft.Toolkit.Uwp.Notifications;
+using Windows.UI;
 
 namespace Windows_UWP.Views
 {
@@ -38,15 +39,23 @@ namespace Windows_UWP.Views
         {
             try
             {
+                EmailTextBox.ClearValue(TextBox.BorderBrushProperty);
+                PasswordTextBox.ClearValue(TextBox.BorderBrushProperty);
+
                 var userJson = JsonConvert.SerializeObject(LoginViewModel);
                 HttpClient client = new HttpClient();
+                var res = await client.PostAsync($"{apiUrl}/login", new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
+                if (!res.IsSuccessStatusCode)
+                {
+                    throw new ArgumentException("Error whilst logging in!");
+                }
+                ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken = await res.Content.ReadAsStringAsync();
+
                 var jsonPromotion = await client.GetStringAsync($"{apiUrl}/GetPromotionsFromAbonnees/{LoginViewModel.Email}");
                 PromotionViewModel = JsonConvert.DeserializeObject<List<PromotionViewModel>>(jsonPromotion);
                 var jsonEvent = await client.GetStringAsync($"{apiUrl}/GetEventsFromAbbonees/{LoginViewModel.Email}");
                 EventViewModel = JsonConvert.DeserializeObject<List<EventViewModel>>(jsonEvent);
-                var res = await client.PostAsync($"{apiUrl}/login", new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
-                
-                ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken = await res.Content.ReadAsStringAsync();
+
                 CreatePromotionNotification();
                 CreateEventsNotification();
                 Frame.Navigate(typeof(PlacesView));
@@ -55,6 +64,10 @@ namespace Windows_UWP.Views
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
+                Notification.Show(5000);
+                EmailTextBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                PasswordTextBox.BorderBrush = new SolidColorBrush(Colors.Red);
+                LoginViewModel.Email = "";
             }
         }
 

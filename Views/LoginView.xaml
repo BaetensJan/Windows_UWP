@@ -5,6 +5,7 @@
     xmlns:local="using:Windows_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
@@ -37,5 +38,12 @@
             <Button Content="Submit" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"  Click="SubmitOnClick" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             <HyperlinkButton Click="CreateAccountOnClick" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Content="Don't have an account? Register a new account."/>
         </Grid>
+        <controls:InAppNotification Grid.Row="2" Grid.ColumnSpan="3" x:Name="Notification">
+            <controls:InAppNotification.ContentTemplate>
+                <DataTemplate>
+                    <TextBlock>Error Logging in, Please try again! If the Error keeps occuring, check your internet connection.</TextBlock>
+                </DataTemplate>
+            </controls:InAppNotification.ContentTemplate>
+        </controls:InAppNotification>
     </Grid>
 </Page>
