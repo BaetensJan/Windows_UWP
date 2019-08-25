@@ -47,7 +47,9 @@ namespace Windows_UWP.ViewModels
                         Id = promotion.Id,
                         Name = promotion.Name,
                         Description = promotion.Description,
-                        PromotionType = promotion.PromotionType
+                        PromotionType = promotion.PromotionType,
+                        StartDate = promotion.ConvertStringToDateTimeOffset(promotion.StartDate),
+                        EndDate = promotion.ConvertStringToDateTimeOffset(promotion.EndDate)
                     });
                 }
             }

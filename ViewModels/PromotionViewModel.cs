@@ -15,6 +15,10 @@ namespace Windows_UWP.ViewModels
         public string Name {
             get { return _name; }
             set {
+                if(value == "" && value == null)
+                {
+                    throw new Exception("Naam van de promotie moet ingevuld zijn.");
+                }
                 _name = value;
                 OnPropertyChanged("Name");
             }
@@ -28,19 +32,44 @@ namespace Windows_UWP.ViewModels
             }
         }
 
-        private string _startAndEndDate;
-        public string StartAndEndDate {
-            get { return _startAndEndDate; }
+        private DateTimeOffset _startDate;
+        public DateTimeOffset StartDate {
+            get { return _startDate; }
             set {
-                _startAndEndDate = value;
-                OnPropertyChanged("StartAndEndDate");
+                _startDate = value;
+                OnPropertyChanged("StartDate");
             }
+        }
+
+        private DateTimeOffset _endDate;
+        public DateTimeOffset EndDate
+        {
+            get { return _endDate; }
+            set
+            {
+                _endDate = value;
+                OnPropertyChanged("EndDate");
+            }
+        }
+        public string EndDateString
+        {
+            get { return _endDate.ToString("d"); }
+            
+        }
+        public string StartDateString
+        {
+            get { return _startDate.ToString("d"); }
+
         }
         public string _description;
 
         public string Description {
             get { return _description; }
             set {
+                if (value == "" && value == null)
+                {
+                    throw new Exception("Description van de promotie moet ingevuld zijn.");
+                }
                 _description = value;
                 OnPropertyChanged("Description");
             }

@@ -6,9 +6,11 @@ using System.Linq;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Services.Maps;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows_UWP.Enums;
 using Windows_UWP.ViewModels;
@@ -83,8 +85,12 @@ namespace Windows_UWP.Views
         {
             try
             {
-                await EditPlaceViewModel.SaveTaskAsync();
-                Notification.Show(5000);
+                if (ValidateInput("business"))
+                {
+                    await EditPlaceViewModel.SaveTaskAsync();
+
+                    Notification.Show(5000);
+                }
             }
             catch (Exception ex)
             {
@@ -105,28 +111,51 @@ namespace Windows_UWP.Views
         private async void RemoveSelectedEvent(object sender, RoutedEventArgs e)
         {
             var removeEvent = (EventViewModel)EventsGridView.SelectedItem;
-            await EditPlaceViewModel.RemoveEventFromBusiness(removeEvent);
+            if (removeEvent != null)
+            {
+                EventNotPickedValidationMessage.Visibility = Visibility.Collapsed;
+                await EditPlaceViewModel.RemoveEventFromBusiness(removeEvent);
 
-            EditPlaceViewModel.BusinessViewModel.Events.Remove(removeEvent);
+                EditPlaceViewModel.BusinessViewModel.Events.Remove(removeEvent);
+                Notification.Show(5000);
+            }
+            else
+            {
+                
+                EventNotPickedValidationMessage.Visibility = Visibility.Visible;
+            }
 
         }
 
         private async void RemoveSelectedPromotion(object sender, RoutedEventArgs e)
         {
             var removePromotion = (PromotionViewModel)PromotionsGridView.SelectedItem;
-            await EditPlaceViewModel.RemovePromotionFromBusiness(removePromotion);
+            if (removePromotion != null)
+            {
+                PromotionNotPickedValidationMessage.Visibility = Visibility.Collapsed;
+                await EditPlaceViewModel.RemovePromotionFromBusiness(removePromotion);
 
-            EditPlaceViewModel.BusinessViewModel.Promotions.Remove(removePromotion);
+                EditPlaceViewModel.BusinessViewModel.Promotions.Remove(removePromotion);
+                Notification.Show(5000);
+            }
+            else
+            {
+                PromotionNotPickedValidationMessage.Visibility = Visibility.Visible;
+            }
         }
 
         private async void OnAddEventButton(object sender, RoutedEventArgs e)
         {
             try
             {
-                EventViewModel.Creation = DateTime.UtcNow;
-                EditPlaceViewModel.BusinessViewModel.Events.Add(EventViewModel);
+                if (ValidateInput("event"))
+                {
+                    EventViewModel.Creation = DateTime.UtcNow;
+                    EditPlaceViewModel.BusinessViewModel.Events.Add(EventViewModel);
 
-                await EditPlaceViewModel.AddEventToBusiness();
+                    await EditPlaceViewModel.AddEventToBusiness();
+                    Notification.Show(5000);
+                }
             }
             catch (Exception ex)
             {
@@ -138,9 +167,12 @@ namespace Windows_UWP.Views
         {
             try
             {
-                PromotionViewModel.Creation = DateTime.UtcNow;
-                EditPlaceViewModel.BusinessViewModel.Promotions.Add(PromotionViewModel);
-                await EditPlaceViewModel.AddPromotionToBusiness();
+                if (ValidateInput("promotion")){
+                    PromotionViewModel.Creation = DateTime.UtcNow;
+                    EditPlaceViewModel.BusinessViewModel.Promotions.Add(PromotionViewModel);
+                    await EditPlaceViewModel.AddPromotionToBusiness();
+                    Notification.Show(5000);
+                }
 
                 
             }
@@ -158,7 +190,8 @@ namespace Windows_UWP.Views
             PromotionViewModel.Name = clickedMenuItem.Name;
             PromotionViewModel.Description = clickedMenuItem.Description;
             PromotionViewModel.PromotionType = clickedMenuItem.PromotionType;
-            PromotionViewModel.StartAndEndDate = clickedMenuItem.StartAndEndDate;
+            PromotionViewModel.StartDate = clickedMenuItem.StartDate;
+            PromotionViewModel.EndDate = clickedMenuItem.EndDate;
             promotionType.SelectedItem = clickedMenuItem.PromotionType;
         }
 
@@ -166,7 +199,11 @@ namespace Windows_UWP.Views
         {
             try
             {
-                await EditPlaceViewModel.EditPromotion(PromotionViewModel);
+                if (ValidateInput("promotion"))
+                {
+                    await EditPlaceViewModel.EditPromotion(PromotionViewModel);
+                    Notification.Show(5000);
+                }
             }
             catch (Exception ex)
             {
@@ -177,7 +214,11 @@ namespace Windows_UWP.Views
         {
             try
             {
-                await EditPlaceViewModel.EditEvent(EventViewModel);
+                if (ValidateInput("event"))
+                {
+                    await EditPlaceViewModel.EditEvent(EventViewModel);
+                    Notification.Show(5000);
+                }
             }
             catch (Exception ex)
             {
@@ -279,6 +320,87 @@ namespace Windows_UWP.Views
             }
         }
         #endregion
+        private bool ValidateInput(string name)
+        {
+            var valid = true;
+            if (name.Equals("business"))
+            {
+                businessName.ClearValue(TextBox.BorderBrushProperty);
+                businessAddress.ClearValue(TextBox.BorderBrushProperty);
+                businessType.ClearValue(TextBox.BorderBrushProperty);
+                NameValidationMessage.Visibility = Visibility.Collapsed;
+                AddressValidationMessage.Visibility = Visibility.Collapsed;
+                if (EditPlaceViewModel.BusinessViewModel.Name == null || EditPlaceViewModel.BusinessViewModel.Name.Trim().Length == 0)
+                {
+                    businessName.BorderBrush = new SolidColorBrush(Colors.Red);
+                    valid = false;
+                    NameValidationMessage.Visibility = Visibility.Visible;
+                }
+                if (EditPlaceViewModel.BusinessViewModel.Address == null || EditPlaceViewModel.BusinessViewModel.Address.Trim().Length == 0)
+                {
+                    businessAddress.BorderBrush = new SolidColorBrush(Colors.Red);
+                    valid = false;
+                    AddressValidationMessage.Visibility = Visibility.Visible;
+                }
+            }
+            if (name.Equals("event"))
+            {
+                EventName.ClearValue(TextBox.BorderBrushProperty);
+                EventType.ClearValue(TextBox.BorderBrushProperty);
+                EventDescription.ClearValue(TextBox.BorderBrushProperty);
+                EventNameValidationMessage.Visibility = Visibility.Collapsed;
+                EventTypeValidationMessage.Visibility = Visibility.Collapsed;
+                EventDescriptionValidationMessage.Visibility = Visibility.Collapsed;
+                if (EventViewModel.Name ==null || EventViewModel.Name.Trim().Length == 0)
+                {
+                    EventName.BorderBrush = new SolidColorBrush(Colors.Red);
+                    valid = false;
+                    EventNameValidationMessage.Visibility = Visibility.Visible;
+                }
+                if (EventViewModel.Type == null || EventViewModel.Type.Trim().Length == 0)
+                {
+                    EventType.BorderBrush = new SolidColorBrush(Colors.Red);
+                    valid = false;
+                    EventTypeValidationMessage.Visibility = Visibility.Visible;
+                }
+                if (EventViewModel.Description == null || EventViewModel.Description.Trim().Length == 0)
+                {
+                    EventDescription.BorderBrush = new SolidColorBrush(Colors.Red);
+                    valid = false;
+                    EventDescriptionValidationMessage.Visibility = Visibility.Visible;
+                }
 
+            }
+
+            if (name.Equals("promotion"))
+            {
+                PromotionName.ClearValue(TextBox.BorderBrushProperty);
+                PromotionDescription.ClearValue(TextBox.BorderBrushProperty);
+                PromotionNameValidationMessage.Visibility = Visibility.Collapsed;
+                PromotionDescriptionValidationMessage.Visibility = Visibility.Collapsed;
+                PromotionDateValidationMessage.Visibility = Visibility.Collapsed;
+                if (PromotionViewModel.Name == null || PromotionViewModel.Name.Trim().Length == 0)
+                {
+                    PromotionName.BorderBrush = new SolidColorBrush(Colors.Red);
+                    valid = false;
+                    PromotionNameValidationMessage.Visibility = Visibility.Visible;
+                }
+                if (PromotionViewModel.Description == null || PromotionViewModel.Description.Trim().Length == 0)
+                {
+                    PromotionDescription.BorderBrush = new SolidColorBrush(Colors.Red);
+                    valid = false;
+                    PromotionDescriptionValidationMessage.Visibility = Visibility.Visible;
+                }
+                if(1 == DateTimeOffset.Compare(PromotionViewModel.StartDate, PromotionViewModel.EndDate))
+                {
+                    startDate.BorderBrush = new SolidColorBrush(Colors.Red);
+                    endDate.BorderBrush = new SolidColorBrush(Colors.Red);
+                    valid = false;
+                    PromotionDateValidationMessage.Visibility = Visibility.Visible; 
+                }
+            }
+            return valid;
+
+        }
     }
 }

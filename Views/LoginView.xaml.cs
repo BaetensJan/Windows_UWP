@@ -17,12 +17,6 @@ using Windows.UI.Xaml.Navigation;
 using Windows_UWP.ViewModels;
 using Windows.UI.Notifications;
 using Microsoft.Toolkit.Uwp.Notifications; 
-using Microsoft.QueryStringDotNET;
-using Windows.UI.Notifications;
-using Microsoft.Toolkit.Uwp.Notifications;
-using Microsoft.QueryStringDotNET;
-using Windows_UWP.Utils;
-using Windows.UI.Composition;
 
 namespace Windows_UWP.Views
 {
@@ -73,19 +67,23 @@ namespace Windows_UWP.Views
         {
                 foreach (var promotion in PromotionViewModel)
                 {
-                    ToastVisual visual = new ToastVisual()
+                ToastVisual visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
                     {
-                        BindingGeneric = new ToastBindingGeneric()
-                        {
-                            Children =
+                        Children =
                         {
                             new AdaptiveText()
                             {
-                                Text = promotion.Name
+                                Text = "Promotion name:" +  promotion.Name
                             },
                             new AdaptiveText()
                             {
-                                Text = promotion.StartAndEndDate
+                                Text = "Begins:" + promotion.StartDate.ToString()
+                            },
+                            new AdaptiveText()
+                            {
+                                Text = "Ends:" + promotion.EndDate.ToString()
                             },
                             new AdaptiveText()
                             {
@@ -111,15 +109,15 @@ namespace Windows_UWP.Views
                         {
                             new AdaptiveText()
                             {
-                                Text = xEvent.Name
-                            },
-                            new AdaptiveText()
-                            {
-                                Text = xEvent.Description
+                                Text = "Event name" + xEvent.Name
                             },
                             new AdaptiveText()
                             {
                                 Text = xEvent.Type
+                            },
+                            new AdaptiveText()
+                            {
+                                Text = xEvent.Description
                             }
                         }
                             }

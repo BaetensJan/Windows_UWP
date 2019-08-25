@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows_UWP.Entities;
 using Windows_UWP.Utils;
 
 namespace Windows_UWP.ViewModels
@@ -25,6 +26,8 @@ namespace Windows_UWP.ViewModels
                 OnPropertyChanged("BusinessViewModel");
             }
         }
+        private Business Business;
+
 
         protected void OnPropertyChanged(string name)
         {

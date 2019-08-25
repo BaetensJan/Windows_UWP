@@ -100,13 +100,15 @@
                                     <Flyout>
                                         <StackPanel>
                                             <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                                            <TextBlock Text="{Binding StartAndEndDate}" TextWrapping="NoWrap"/>
+                                            <TextBlock Text="{Binding StartDateString}" TextWrapping="NoWrap"/>
+                                            <TextBlock Text="{Binding EndDateString}" TextWrapping="NoWrap"/>
                                             <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
                                         </StackPanel>
                                     </Flyout>
                                 </FlyoutBase.AttachedFlyout>
                                 <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding StartAndEndDate}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding StartDateString}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding EndDateString}" TextWrapping="NoWrap"/>
                                 <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
                             </StackPanel>
                         </Border>
