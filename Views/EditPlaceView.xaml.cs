@@ -14,7 +14,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using Windows_UWP.Enums;
 using Windows_UWP.ViewModels;
- 
+
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -121,7 +121,7 @@ namespace Windows_UWP.Views
             }
             else
             {
-                
+
                 EventNotPickedValidationMessage.Visibility = Visibility.Visible;
             }
 
@@ -167,14 +167,15 @@ namespace Windows_UWP.Views
         {
             try
             {
-                if (ValidateInput("promotion")){
+                if (ValidateInput("promotion"))
+                {
                     PromotionViewModel.Creation = DateTime.UtcNow;
                     EditPlaceViewModel.BusinessViewModel.Promotions.Add(PromotionViewModel);
                     await EditPlaceViewModel.AddPromotionToBusiness();
                     Notification.Show(5000);
                 }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -225,7 +226,7 @@ namespace Windows_UWP.Views
                 Console.WriteLine(ex);
             }
 
-        
+
         }
         #region Map Methods
         private async void Map_Loaded(object sender, RoutedEventArgs e)
@@ -351,7 +352,7 @@ namespace Windows_UWP.Views
                 EventNameValidationMessage.Visibility = Visibility.Collapsed;
                 EventTypeValidationMessage.Visibility = Visibility.Collapsed;
                 EventDescriptionValidationMessage.Visibility = Visibility.Collapsed;
-                if (EventViewModel.Name ==null || EventViewModel.Name.Trim().Length == 0)
+                if (EventViewModel.Name == null || EventViewModel.Name.Trim().Length == 0)
                 {
                     EventName.BorderBrush = new SolidColorBrush(Colors.Red);
                     valid = false;
@@ -391,12 +392,14 @@ namespace Windows_UWP.Views
                     valid = false;
                     PromotionDescriptionValidationMessage.Visibility = Visibility.Visible;
                 }
-                if(1 == DateTimeOffset.Compare(PromotionViewModel.StartDate, PromotionViewModel.EndDate))
+                var startDateDateTimeOffset = DateTimeOffset.Parse(PromotionViewModel.StartDate);
+                var endDateDateTimeOffset = DateTimeOffset.Parse(PromotionViewModel.EndDate);
+                if (1 == DateTimeOffset.Compare(startDateDateTimeOffset, endDateDateTimeOffset))
                 {
                     startDate.BorderBrush = new SolidColorBrush(Colors.Red);
                     endDate.BorderBrush = new SolidColorBrush(Colors.Red);
                     valid = false;
-                    PromotionDateValidationMessage.Visibility = Visibility.Visible; 
+                    PromotionDateValidationMessage.Visibility = Visibility.Visible;
                 }
             }
             return valid;

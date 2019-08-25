@@ -31,16 +31,13 @@ namespace Windows_UWP.Views
     {
         public BusinessViewModel BusinessViewModel { get; set; } = new BusinessViewModel();
         public UserBusinessViewModel UserBusinessViewModel { get; set; } = new UserBusinessViewModel();
-        public Business business;
         private BasicGeoposition gentLocation = new BasicGeoposition { Latitude = 51.05, Longitude = 3.71666667 };
 
         public PlaceView()
         {
             this.InitializeComponent();
             BingMap.Loaded += Map_Loaded;
-            PromotionsGridView.ItemsSource = BusinessViewModel.Promotions;
-            EventsGridView.ItemsSource = BusinessViewModel.Events;
-            
+
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -48,15 +45,16 @@ namespace Windows_UWP.Views
             base.OnNavigatedTo(e);
             try
             {
-                business = (Business)e.Parameter;
+                BusinessViewModel = (BusinessViewModel)e.Parameter;
 
                 //TODO: CHANGE THIS
-                business.ImageUrl = "https://fashiongrabber.blob.core.windows.net/shop-2659/IMG_2953.JPG";
-                BusinessViewModel.ParseBusiness(business);
-                UserBusinessViewModel.BusinessId = business.Id;
-                await UserBusinessViewModel.CheckUserBusinessForSubscribtion();
+                BusinessViewModel.ImageUrl = "https://fashiongrabber.blob.core.windows.net/shop-2659/IMG_2953.JPG";
+                UserBusinessViewModel.BusinessId = BusinessViewModel.Id;
+                await UserBusinessViewModel.CheckUserBusinessForSubscription();
                 checkSubscribeButton();
                 GeocodePoint(BusinessViewModel.Address);
+                PromotionsGridView.ItemsSource = BusinessViewModel.Promotions;
+                EventsGridView.ItemsSource = BusinessViewModel.Events;
             }
             catch (Exception ex)
             {
@@ -71,14 +69,14 @@ namespace Windows_UWP.Views
 
         private async void Subscribe(object sender, RoutedEventArgs e)
         {
-            UserBusinessViewModel.BusinessId = business.Id;
+            UserBusinessViewModel.BusinessId = BusinessViewModel.Id;
             await UserBusinessViewModel.Subscribe();
             checkSubscribeButton();
         }
 
         private void checkSubscribeButton()
         {
-            if (UserBusinessViewModel.substatus)
+            if (UserBusinessViewModel.SubStatus)
             {
                 subscribeButton.Content = "Unsubscribe";
             }

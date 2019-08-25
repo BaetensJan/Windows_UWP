@@ -7,10 +7,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:Maps="using:Windows.UI.Xaml.Controls.Maps"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:utils="using:Windows_UWP.Utils"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-
+    <Page.Resources>
+        <utils:StringToDateTimeOffsetConverter x:Key="StringToDateTimeOffsetConverterKey"/>
+    </Page.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -20,7 +23,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="8*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="1.5*" />
         </Grid.RowDefinitions>
         <ScrollViewer Grid.Row="1" Grid.Column="1">
             <StackPanel Spacing="20" Margin="20">
@@ -39,8 +42,8 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    
-                        <TextBlock Text="Business Name" Grid.Row="0" Grid.Column="0"/>
+
+                    <TextBlock Text="Business Name" Grid.Row="0" Grid.Column="0"/>
                     <StackPanel Grid.Row="0" Grid.Column="1">
                         <TextBox Text="{x:Bind EditPlaceViewModel.BusinessViewModel.Name, Mode=TwoWay}" Grid.Column="1" Grid.Row="0" x:Name="businessName" />
                         <TextBlock x:Name="NameValidationMessage" FontSize="10" Foreground="Red" Text="Your business must have a name, enter a name in the textfield" Visibility="Collapsed"/>
@@ -112,8 +115,8 @@
                     <TextBlock Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">Add New Event</TextBlock>
                     <TextBlock Grid.Row="1" Grid.Column="1">Name</TextBlock>
                     <StackPanel Grid.Row="1" Grid.Column="2">
-                         <TextBox  x:Name="EventName" Text="{x:Bind EventViewModel.Name, Mode=TwoWay}"></TextBox>
-                         <TextBlock x:Name="EventNameValidationMessage" FontSize="10" Foreground="Red" Text="Your event must have a name." Visibility="Collapsed"/>
+                        <TextBox  x:Name="EventName" Text="{x:Bind EventViewModel.Name, Mode=TwoWay}"></TextBox>
+                        <TextBlock x:Name="EventNameValidationMessage" FontSize="10" Foreground="Red" Text="Your event must have a name." Visibility="Collapsed"/>
                     </StackPanel>
                     <TextBlock Grid.Row="2" Grid.Column="1">Type</TextBlock>
                     <StackPanel Grid.Row="2" Grid.Column="2">
@@ -170,13 +173,13 @@
                         <TextBlock x:Name="PromotionNameValidationMessage" FontSize="10" Foreground="Red" Text="The promotion must have a name." Visibility="Collapsed"/>
                     </StackPanel>
                     <TextBlock Grid.Row="2" Grid.Column="1">Type</TextBlock>
-                        <ComboBox SelectionChanged="PromotionType_SelectionChanged" Grid.Column="2" Grid.Row="2" x:Name="promotionType"/>
+                    <ComboBox SelectionChanged="PromotionType_SelectionChanged" Grid.Column="2" Grid.Row="2" x:Name="promotionType"/>
                     <TextBlock Grid.Row="3" Grid.Column="1"> Start date</TextBlock>
-                    <DatePicker Grid.Row="3" Grid.Column="2" x:Name="startDate" Date="{x:Bind PromotionViewModel.StartDate, Mode=TwoWay}"></DatePicker>
-                    
-                        <TextBlock Grid.Row="4" Grid.Column="1">End date</TextBlock>
+                    <DatePicker Grid.Row="3" Grid.Column="2" x:Name="startDate" Date="{Binding Path=PromotionViewModel.StartDate, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToDateTimeOffsetConverterKey}, Mode=TwoWay}"></DatePicker>
+
+                    <TextBlock Grid.Row="4" Grid.Column="1">End date</TextBlock>
                     <StackPanel Grid.Row="4" Grid.Column="2">
-                        <DatePicker  x:Name="endDate" Date="{x:Bind PromotionViewModel.EndDate, Mode=TwoWay}"></DatePicker>
+                        <DatePicker x:Name="endDate" Date="{Binding Path=PromotionViewModel.EndDate, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToDateTimeOffsetConverterKey}, Mode=TwoWay}"></DatePicker>
                         <TextBlock x:Name="PromotionDateValidationMessage" FontSize="10" Foreground="Red" Text="The end date is earlier then the start date of the promotion." Visibility="Collapsed"/>
                     </StackPanel>
                     <TextBlock Grid.Row="5" Grid.Column="1">Description</TextBlock>

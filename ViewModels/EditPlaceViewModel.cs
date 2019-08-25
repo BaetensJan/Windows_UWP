@@ -1,15 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
+using Windows_UWP.Data;
 using Windows_UWP.Entities;
-using Windows_UWP.Utils;
 
 namespace Windows_UWP.ViewModels
 {
@@ -38,13 +35,7 @@ namespace Windows_UWP.ViewModels
         {
             try
             {
-                var token = ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken;
-
-                var claims = JWTTokenConverter.ConvertToList(token);
-                var businessId = claims.First(c => c.Type == "businessId").Value;
-                HttpClient client = new HttpClient();
-                var json = await client.GetStringAsync($"{apiUrl}/Index/{businessId}");
-                BusinessViewModel = JsonConvert.DeserializeObject<BusinessViewModel>(json);
+                BusinessViewModel = await ApiClient.Instance.GetBusinessFromJWTAsync();
             }
             catch (Exception ex)
             {
@@ -56,21 +47,15 @@ namespace Windows_UWP.ViewModels
         {
             try
             {
-                var token = ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken;
-
-
-                var json = JsonConvert.SerializeObject(BusinessViewModel);
-                HttpClient client = new HttpClient();
-                client.DefaultRequestHeaders.Authorization
-                         = new AuthenticationHeaderValue("Bearer", token);
-                var res = await client.PostAsync($"{apiUrl}/Edit", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                await ApiClient.Instance.PostBusinessFromJWTAsync(BusinessViewModel);
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex);
             }
         }
 
+        //TODO: Remove? Add to save task?
         public async Task AddEventToBusiness()
         {
             try
@@ -101,11 +86,13 @@ namespace Windows_UWP.ViewModels
                 client.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue("Bearer", token);
                 var res = await client.PostAsync($"{apiUrl}/RemoveEvents", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
 
             }
         }
+
         public async Task RemovePromotionFromBusiness(PromotionViewModel removePromotion)
         {
             try

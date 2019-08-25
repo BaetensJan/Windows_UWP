@@ -18,6 +18,7 @@ using Windows_UWP.ViewModels;
 using Windows.UI.Notifications;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Windows.UI;
+using Windows_UWP.Data;
 
 namespace Windows_UWP.Views
 {
@@ -28,8 +29,6 @@ namespace Windows_UWP.Views
         public LoginViewModel LoginViewModel { get; set; } = new LoginViewModel();
         public List<PromotionViewModel> PromotionViewModel { get; set; } = new List<PromotionViewModel>();
         public List<EventViewModel> EventViewModel { get; set; } = new List<EventViewModel>();
-
-        private const string apiUrl = "http://localhost:5000/account";
 
         public LoginView()
         {
@@ -42,22 +41,11 @@ namespace Windows_UWP.Views
                 EmailTextBox.ClearValue(TextBox.BorderBrushProperty);
                 PasswordTextBox.ClearValue(TextBox.BorderBrushProperty);
 
-                var userJson = JsonConvert.SerializeObject(LoginViewModel);
-                HttpClient client = new HttpClient();
-                var res = await client.PostAsync($"{apiUrl}/login", new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
-                if (!res.IsSuccessStatusCode)
-                {
-                    throw new ArgumentException("Error whilst logging in!");
-                }
-                ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken = await res.Content.ReadAsStringAsync();
-
-                var jsonPromotion = await client.GetStringAsync($"{apiUrl}/GetPromotionsFromAbonnees/{LoginViewModel.Email}");
-                PromotionViewModel = JsonConvert.DeserializeObject<List<PromotionViewModel>>(jsonPromotion);
-                var jsonEvent = await client.GetStringAsync($"{apiUrl}/GetEventsFromAbbonees/{LoginViewModel.Email}");
-                EventViewModel = JsonConvert.DeserializeObject<List<EventViewModel>>(jsonEvent);
+                await ApiClient.Instance.PostLoginAsync(LoginViewModel);
 
                 CreatePromotionNotification();
                 CreateEventsNotification();
+
                 Frame.Navigate(typeof(PlacesView));
                 this.Frame.BackStack.Clear();
             }
@@ -78,8 +66,8 @@ namespace Windows_UWP.Views
 
         private void CreatePromotionNotification()
         {
-                foreach (var promotion in PromotionViewModel)
-                {
+            foreach (var promotion in PromotionViewModel)
+            {
                 ToastVisual visual = new ToastVisual()
                 {
                     BindingGeneric = new ToastBindingGeneric()
@@ -103,22 +91,22 @@ namespace Windows_UWP.Views
                                 Text = promotion.PromotionType.ToString()
                             }
                         }
-                        }
+                    }
 
-                    };
-                    createNotification(visual, promotion.Name);
+                };
+                createNotification(visual, promotion.Name);
 
-                }
+            }
         }
         private void CreateEventsNotification()
-        { 
+        {
             foreach (var xEvent in EventViewModel)
+            {
+                ToastVisual visual = new ToastVisual()
+                {
+                    BindingGeneric = new ToastBindingGeneric()
                     {
-                        ToastVisual visual = new ToastVisual()
-                        {
-                            BindingGeneric = new ToastBindingGeneric()
-                            {
-                                Children =
+                        Children =
                         {
                             new AdaptiveText()
                             {
@@ -133,10 +121,10 @@ namespace Windows_UWP.Views
                                 Text = xEvent.Description
                             }
                         }
-                            }
-                        };
-                        createNotification(visual, xEvent.Name);
-                }
+                    }
+                };
+                createNotification(visual, xEvent.Name);
+            }
 
         }
         private void createNotification(ToastVisual visual, string name)
@@ -146,7 +134,7 @@ namespace Windows_UWP.Views
                 Visual = visual,
                 Launch = ""
             };
-            
+
             // And create the toast notification
             var toast = new ToastNotification(toastContent.GetXml());
             toast.Group = LoginViewModel.Email;

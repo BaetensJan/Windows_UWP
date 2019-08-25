@@ -1,21 +1,17 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using Windows_UWP.Entities;
+using Windows_UWP.Data;
 using Windows_UWP.Enums;
 
 namespace Windows_UWP.ViewModels
 {
     public class PlacesViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Business> _items;
-        public ObservableCollection<Business> Items {
+        public ObservableCollection<BusinessViewModel> _items;
+        public ObservableCollection<BusinessViewModel> Items {
             get { return _items; }
             set {
                 _items = value;
@@ -24,20 +20,18 @@ namespace Windows_UWP.ViewModels
             }
         }
 
-        public ObservableCollection<Business> _filteredItems;
-        public ObservableCollection<Business> FilteredItems {
+        public ObservableCollection<BusinessViewModel> _filteredItems;
+        public ObservableCollection<BusinessViewModel> FilteredItems {
             get { return _filteredItems; }
             set { _filteredItems = value; OnPropertyChanged("FilteredItems"); }
         }
-
-        private const string apiUrl = "http://localhost:5000/business/index";
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public PlacesViewModel()
         {
-            Items = new ObservableCollection<Business>();
-            FilteredItems = new ObservableCollection<Business>();
+            Items = new ObservableCollection<BusinessViewModel>();
+            FilteredItems = new ObservableCollection<BusinessViewModel>();
         }
 
         protected void OnPropertyChanged(string name)
@@ -51,9 +45,11 @@ namespace Windows_UWP.ViewModels
 
             try
             {
-                HttpClient client = new HttpClient();
-                var json = await client.GetStringAsync(apiUrl);
-                Items = JsonConvert.DeserializeObject<ObservableCollection<Business>>(json);
+                var list = await ApiClient.Instance.GetPlacesAsync();
+                foreach (var i in list)
+                {
+                    Items.Add(i);
+                }
             }
             catch (Exception ex)
             {
@@ -73,7 +69,7 @@ namespace Windows_UWP.ViewModels
             if (FilteredItems.Count == filtered.Count())
                 return;
 
-            FilteredItems = new ObservableCollection<Business>(filtered);
+            FilteredItems = new ObservableCollection<BusinessViewModel>(filtered);
 
         }
     }

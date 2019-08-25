@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI.Xaml.Media;
+using Windows_UWP.Data;
 using Windows_UWP.Enums;
 using Windows_UWP.ViewModels;
 
@@ -20,19 +21,14 @@ namespace Windows_UWP.Views
 {
     public sealed partial class RegisterView : Page
     {
-
-        private const string apiUrl = "http://localhost:5000/account/register";
         private BasicGeoposition gentLocation = new BasicGeoposition { Latitude = 51.05, Longitude = 3.71666667 };
 
-        private HttpClient client { get; set; }
         public RegisterViewModel RegisterViewModel { get; set; } = new RegisterViewModel();
 
         public RegisterView()
         {
             this.InitializeComponent();
             BingMap.Loaded += Map_Loaded;
-
-            client = new HttpClient();
 
             var enumVals = Enum.GetValues(typeof(BusinessType)).Cast<BusinessType>();
             businessType.ItemsSource = enumVals.ToList();
@@ -70,10 +66,7 @@ namespace Windows_UWP.Views
             {
                 if (ValidateInputs())
                 {
-                    var userJson = JsonConvert.SerializeObject(RegisterViewModel);
-                    HttpClient client = new HttpClient();
-                    var res = await client.PostAsync(apiUrl, new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
-                    ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken = await res.Content.ReadAsStringAsync();
+                    await ApiClient.Instance.PostRegisterAsync(RegisterViewModel);
                     Frame.GoBack();
                 }
             }

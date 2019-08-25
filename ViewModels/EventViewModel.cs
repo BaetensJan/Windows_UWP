@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Windows_UWP.ViewModels
 {
@@ -16,7 +12,7 @@ namespace Windows_UWP.ViewModels
             set {
                 if (value == "" && value == null)
                 {
-                    throw new Exception("Naam van het event moet ingevuld zijn.");
+                    throw new Exception("Name of event needs to be filled in.");
                 }
                 _name = value;
                 OnPropertyChanged("Name");
@@ -28,7 +24,7 @@ namespace Windows_UWP.ViewModels
             set {
                 if (value == "" && value == null)
                 {
-                    throw new Exception("Kies een type voor het event.");
+                    throw new Exception("Choose a type for the event.");
                 }
                 _type = value;
                 OnPropertyChanged("Type");
@@ -36,14 +32,13 @@ namespace Windows_UWP.ViewModels
         }
         public string _description;
 
-        public string Description
-        {
-            
-    get { return _description; }
+        public string Description {
+
+            get { return _description; }
             set {
                 if (value == "" && value == null)
                 {
-                    throw new Exception("Description van het event moet ingevuld zijn.");
+                    throw new Exception("Enter a description for the event.");
                 }
                 _description = value;
                 OnPropertyChanged("Description");

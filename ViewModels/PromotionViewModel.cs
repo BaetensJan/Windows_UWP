@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows_UWP.Enums;
 
 namespace Windows_UWP.ViewModels
@@ -15,7 +11,7 @@ namespace Windows_UWP.ViewModels
         public string Name {
             get { return _name; }
             set {
-                if(value == "" && value == null)
+                if (value == "" && value == null)
                 {
                     throw new Exception("Naam van de promotie moet ingevuld zijn.");
                 }
@@ -32,8 +28,8 @@ namespace Windows_UWP.ViewModels
             }
         }
 
-        private DateTimeOffset _startDate;
-        public DateTimeOffset StartDate {
+        private string _startDate;
+        public string StartDate {
             get { return _startDate; }
             set {
                 _startDate = value;
@@ -41,26 +37,15 @@ namespace Windows_UWP.ViewModels
             }
         }
 
-        private DateTimeOffset _endDate;
-        public DateTimeOffset EndDate
-        {
+        private string _endDate;
+        public string EndDate {
             get { return _endDate; }
-            set
-            {
+            set {
                 _endDate = value;
                 OnPropertyChanged("EndDate");
             }
         }
-        public string EndDateString
-        {
-            get { return _endDate.ToString("d"); }
-            
-        }
-        public string StartDateString
-        {
-            get { return _startDate.ToString("d"); }
 
-        }
         public string _description;
 
         public string Description {

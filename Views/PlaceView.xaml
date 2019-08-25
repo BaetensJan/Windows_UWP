@@ -45,6 +45,9 @@
                 <TextBlock Text="Address: " FontWeight="Bold"/>
                 <TextBlock Text="{x:Bind BusinessViewModel.Address, Mode=OneWay}" TextWrapping="NoWrap"/>
             </StackPanel>
+            <StackPanel Orientation="Vertical" Visibility="{Binding IsLoggedIn, Source={StaticResource UserSettings}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                <Button Content="{Binding UserBusinessViewModel.substatus, Converter={StaticResource BooleanToSubscribeConverter}}" x:Name="subscribeButton" Click="Subscribe"></Button>
+            </StackPanel>
         </StackPanel>
         <Maps:MapControl Grid.Row="1" Grid.Column="3"
                                x:Name="BingMap"
@@ -53,18 +56,15 @@
                                TiltInteractionMode="GestureAndControl" 
                                MapServiceToken="tIdxWzAAjyJLLvKRLUMW~C_ipKmhoGhucVZ24LHNjXw~Aoj7cCRdHVB98ZGHHmIrWex6V7YLB41OEKiT5uF5bA0clqU3NCm45QCo-yXPFIv4"  
                                ZoomLevel="8"/>
-        <StackPanel Grid.Row="1" Grid.Column="3" Orientation="Vertical" Visibility="{Binding IsLoggedIn, Source={StaticResource UserSettings}, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <Button Content="{Binding UserBusinessViewModel.substatus, Converter={StaticResource BooleanToSubscribeConverter}}" x:Name="subscribeButton" Click="Subscribe"></Button>
-        </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2"  Orientation="Vertical" Spacing="10">
-        <TextBlock Text="Events: " FontWeight="Bold"/>
-        <GridView x:Name="EventsGridView"
+            <TextBlock Text="Events: " FontWeight="Bold"/>
+            <GridView x:Name="EventsGridView"
                   IsItemClickEnabled="True"
                   IsSwipeEnabled="False"
                   CanDragItems="False"
                   SelectionMode="Single">
-            <GridView.ItemTemplate>
-                <DataTemplate>
+                <GridView.ItemTemplate>
+                    <DataTemplate>
                         <Border BorderThickness="1" BorderBrush="LightGray">
                             <StackPanel Margin="10" Width="200" Height="80" Tapped="GridViewItem_Tapped">
                                 <FlyoutBase.AttachedFlyout>
@@ -82,8 +82,8 @@
                             </StackPanel>
                         </Border>
                     </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+                </GridView.ItemTemplate>
+            </GridView>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"  Orientation="Vertical" Spacing="10">
             <TextBlock Text="Promotions: " FontWeight="Bold"/>
@@ -100,15 +100,15 @@
                                     <Flyout>
                                         <StackPanel>
                                             <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                                            <TextBlock Text="{Binding StartDateString}" TextWrapping="NoWrap"/>
-                                            <TextBlock Text="{Binding EndDateString}" TextWrapping="NoWrap"/>
+                                            <TextBlock Text="{Binding StartDate}" TextWrapping="NoWrap"/>
+                                            <TextBlock Text="{Binding EndDate}" TextWrapping="NoWrap"/>
                                             <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
                                         </StackPanel>
                                     </Flyout>
                                 </FlyoutBase.AttachedFlyout>
                                 <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding StartDateString}" TextWrapping="NoWrap"/>
-                                <TextBlock Text="{Binding EndDateString}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding StartDate}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding EndDate}" TextWrapping="NoWrap"/>
                                 <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
                             </StackPanel>
                         </Border>
