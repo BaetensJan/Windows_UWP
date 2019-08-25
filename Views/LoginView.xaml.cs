@@ -80,11 +80,11 @@ namespace Windows_UWP.Views
                             },
                             new AdaptiveText()
                             {
-                                Text = "Begins:" + promotion.StartDate.ToString()
+                                Text = "Begins:" + promotion.StartDateOffset.ToString()
                             },
                             new AdaptiveText()
                             {
-                                Text = "Ends:" + promotion.EndDate.ToString()
+                                Text = "Ends:" + promotion.EndDateOffset.ToString()
                             },
                             new AdaptiveText()
                             {

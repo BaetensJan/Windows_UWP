@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,8 @@ namespace Windows_UWP.ViewModels
         public string Name { get; set; }
         public BusinessType Type { get; set; } = BusinessType.Winkel;
         public string Address { get; set; }
-        public List<EventViewModel> Events { get; set; } = new List<EventViewModel>();
-        public List<PromotionViewModel> Promotions { get; set; } = new List<PromotionViewModel>();
+        public ObservableCollection<EventViewModel> Events { get; set; } = new ObservableCollection<EventViewModel>();
+        public ObservableCollection<PromotionViewModel> Promotions { get; set; } = new ObservableCollection<PromotionViewModel>();
         public string ImageUrl { get; set; }
         public Uri ImageUri { get; set; }
     }

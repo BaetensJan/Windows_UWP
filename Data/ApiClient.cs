@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -157,7 +158,11 @@ namespace Windows_UWP.Data
         public async Task<List<BusinessViewModel>> GetPlacesAsync()
         {
             var json = await client.GetStringAsync($"{apiUrl}/Business/Index");
-            return JsonConvert.DeserializeObject<List<BusinessViewModel>>(json);
+            var settings = new JsonSerializerSettings
+            {
+                DateParseHandling = DateParseHandling.DateTimeOffset
+            };
+            return JsonConvert.DeserializeObject<List<BusinessViewModel>>(json, settings);
         }
     }
 }

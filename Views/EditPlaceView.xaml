@@ -11,9 +11,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.Resources>
-        <utils:StringToDateTimeOffsetConverter x:Key="StringToDateTimeOffsetConverterKey"/>
-    </Page.Resources>
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -141,7 +138,7 @@
                         <DataTemplate>
                             <StackPanel Margin="20">
                                 <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                                <TextBlock Text="{Binding PromotionType}" TextWrapping="NoWrap"/>
                                 <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
                             </StackPanel>
                         </DataTemplate>
@@ -175,11 +172,11 @@
                     <TextBlock Grid.Row="2" Grid.Column="1">Type</TextBlock>
                     <ComboBox SelectionChanged="PromotionType_SelectionChanged" Grid.Column="2" Grid.Row="2" x:Name="promotionType"/>
                     <TextBlock Grid.Row="3" Grid.Column="1"> Start date</TextBlock>
-                    <DatePicker Grid.Row="3" Grid.Column="2" x:Name="startDate" Date="{Binding Path=PromotionViewModel.StartDate, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToDateTimeOffsetConverterKey}, Mode=TwoWay}"></DatePicker>
+                    <DatePicker Grid.Row="3" Grid.Column="2" x:Name="startDate" Date="{Binding Path=PromotionViewModel.StartDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DateChanged="StartDate_DateChanged"></DatePicker>
 
                     <TextBlock Grid.Row="4" Grid.Column="1">End date</TextBlock>
                     <StackPanel Grid.Row="4" Grid.Column="2">
-                        <DatePicker x:Name="endDate" Date="{Binding Path=PromotionViewModel.EndDate, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource StringToDateTimeOffsetConverterKey}, Mode=TwoWay}"></DatePicker>
+                        <DatePicker x:Name="endDate" Date="{Binding Path=PromotionViewModel.EndDate, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" DateChanged="EndDate_DateChanged"></DatePicker>
                         <TextBlock x:Name="PromotionDateValidationMessage" FontSize="10" Foreground="Red" Text="The end date is earlier then the start date of the promotion." Visibility="Collapsed"/>
                     </StackPanel>
                     <TextBlock Grid.Row="5" Grid.Column="1">Description</TextBlock>

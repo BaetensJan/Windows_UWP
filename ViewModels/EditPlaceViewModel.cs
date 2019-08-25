@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -23,7 +24,6 @@ namespace Windows_UWP.ViewModels
                 OnPropertyChanged("BusinessViewModel");
             }
         }
-        private Business Business;
 
 
         protected void OnPropertyChanged(string name)
@@ -68,6 +68,7 @@ namespace Windows_UWP.ViewModels
                 client.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue("Bearer", token);
                 var res = await client.PostAsync($"{apiUrl}/AddEvents", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                OnPropertyChanged("BusinessViewModel");
             }
             catch (Exception ex)
             {
@@ -86,6 +87,7 @@ namespace Windows_UWP.ViewModels
                 client.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue("Bearer", token);
                 var res = await client.PostAsync($"{apiUrl}/RemoveEvents", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                OnPropertyChanged("BusinessViewModel");
             }
             catch (Exception ex)
             {
@@ -105,6 +107,7 @@ namespace Windows_UWP.ViewModels
                 client.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue("Bearer", token);
                 var res = await client.PostAsync($"{apiUrl}/RemovePromotion", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                OnPropertyChanged("BusinessViewModel");
             }
             catch (Exception ex)
             {
@@ -116,14 +119,13 @@ namespace Windows_UWP.ViewModels
             try
             {
                 var token = ((UserSettings)Application.Current.Resources["UserSettings"]).JWTToken;
-
-
                 var json = JsonConvert.SerializeObject(BusinessViewModel);
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.Authorization
                          = new AuthenticationHeaderValue("Bearer", token);
 
                 var res = await client.PostAsync($"{apiUrl}/AddPromotion", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                OnPropertyChanged("BusinessViewModel");
             }
             catch (Exception ex)
             {
@@ -143,6 +145,7 @@ namespace Windows_UWP.ViewModels
                          = new AuthenticationHeaderValue("Bearer", token);
 
                 var res = await client.PostAsync($"{apiUrl}/EditPromotion", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                OnPropertyChanged("BusinessViewModel");
             }
             catch (Exception ex)
             {
@@ -162,6 +165,7 @@ namespace Windows_UWP.ViewModels
                          = new AuthenticationHeaderValue("Bearer", token);
 
                 var res = await client.PostAsync($"{apiUrl}/EditEvent", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                OnPropertyChanged("BusinessViewModel");
             }
             catch (Exception ex)
             {

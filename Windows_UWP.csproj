@@ -131,7 +131,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserSettings.cs" />
-    <Compile Include="Utils\StringToDateTimeOffsetConverter.cs" />
+    <Compile Include="Utils\DateTimeOffsetToStringConverter.cs" />
     <Compile Include="Utils\BooleanToSubscribeConverter.cs" />
     <Compile Include="Utils\JWTTokenConverter.cs" />
     <Compile Include="Utils\InverseBooleanToVisibilityConverter.cs" />
