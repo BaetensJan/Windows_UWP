@@ -86,16 +86,17 @@
             </GridView>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2"  Orientation="Vertical" Spacing="10">
-            <TextBlock Text="Promotions: " FontWeight="Bold"/>
+            <TextBlock Text="Promotions (Click to download coupon): " FontWeight="Bold"/>
             <GridView x:Name="PromotionsGridView"
                   IsItemClickEnabled="True"
                   IsSwipeEnabled="False"
                   CanDragItems="False"
-                  SelectionMode="Single">
+                  SelectionMode="Single"
+                  ItemClick="DownloadPDF">
                 <GridView.ItemTemplate>
                     <DataTemplate>
                         <Border BorderThickness="1" BorderBrush="LightGray">
-                            <StackPanel Margin="10" Width="200" Height="80" Tapped="GridViewItem_Tapped">
+                            <StackPanel Margin="10" Width="200" Height="80">
                                 <FlyoutBase.AttachedFlyout>
                                     <Flyout>
                                         <StackPanel>

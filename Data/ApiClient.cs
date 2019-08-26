@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +8,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Networking.BackgroundTransfer;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows_UWP.Entities;
 using Windows_UWP.Utils;
@@ -61,6 +64,15 @@ namespace Windows_UWP.Data
 
             client.DefaultRequestHeaders.Authorization
                 = new AuthenticationHeaderValue("Bearer", UserSettings.JWTToken);
+        }
+
+        public async Task GetPDF(int id, StorageFile file)
+        {
+            Uri source = new Uri($"{apiUrl}/Business/PdfForPromotion/{id}");
+
+            BackgroundDownloader downloader = new BackgroundDownloader();
+            DownloadOperation download = downloader.CreateDownload(source, file);
+            download.StartAsync();
         }
 
         public async Task<bool> PostSubscribeToBusiness(int businessId)
@@ -157,7 +169,11 @@ namespace Windows_UWP.Data
         public async Task<List<BusinessViewModel>> GetPlacesAsync()
         {
             var json = await client.GetStringAsync($"{apiUrl}/Business/Index");
-            return JsonConvert.DeserializeObject<List<BusinessViewModel>>(json);
+            var settings = new JsonSerializerSettings
+            {
+                DateParseHandling = DateParseHandling.DateTimeOffset
+            };
+            return JsonConvert.DeserializeObject<List<BusinessViewModel>>(json, settings);
         }
     }
 }

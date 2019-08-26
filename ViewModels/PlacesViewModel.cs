@@ -70,7 +70,6 @@ namespace Windows_UWP.ViewModels
                 return;
 
             FilteredItems = new ObservableCollection<BusinessViewModel>(filtered);
-
         }
     }
 }

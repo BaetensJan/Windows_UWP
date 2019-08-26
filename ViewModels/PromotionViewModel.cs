@@ -28,22 +28,33 @@ namespace Windows_UWP.ViewModels
             }
         }
 
-        private string _startDate;
-        public string StartDate {
-            get { return _startDate; }
+        private DateTimeOffset _startDateOffset;
+        public DateTimeOffset StartDateOffset {
+            get { return _startDateOffset; }
             set {
-                _startDate = value;
+                _startDateOffset = value;
                 OnPropertyChanged("StartDate");
             }
         }
 
-        private string _endDate;
-        public string EndDate {
-            get { return _endDate; }
+        private DateTimeOffset _endDateOffset;
+        public DateTimeOffset EndDateOffset {
+            get { return _endDateOffset; }
             set {
-                _endDate = value;
+                _endDateOffset = value;
                 OnPropertyChanged("EndDate");
             }
+        }
+        public string EndDate {
+            set { EndDateOffset = DateTimeOffset.Parse(value); }
+            get { return _endDateOffset.ToString(); }
+
+        }
+
+        public string StartDate {
+            set { StartDateOffset = DateTimeOffset.Parse(value); }
+            get { return _startDateOffset.ToString(); }
+
         }
 
         public string _description;
@@ -66,6 +77,12 @@ namespace Windows_UWP.ViewModels
         protected void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        public PromotionViewModel()
+        {
+            EndDateOffset = DateTimeOffset.Now;
+            StartDateOffset = DateTimeOffset.Now;
         }
     }
 }

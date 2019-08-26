@@ -55,9 +55,8 @@ namespace Windows_UWP.Views
         private void ItemListener(object sender, PropertyChangedEventArgs e)
         {
             GeocodePoint(EditPlaceViewModel.BusinessViewModel.Address);
-            EventsGridView.ItemsSource = new ObservableCollection<EventViewModel>(EditPlaceViewModel.BusinessViewModel.Events);
-            PromotionsGridView.ItemsSource = new ObservableCollection<PromotionViewModel>(EditPlaceViewModel.BusinessViewModel.Promotions);
-
+            EventsGridView.ItemsSource = EditPlaceViewModel.BusinessViewModel.Events;
+            PromotionsGridView.ItemsSource = EditPlaceViewModel.BusinessViewModel.Promotions;
         }
 
         private void BusinessType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -114,9 +113,9 @@ namespace Windows_UWP.Views
             if (removeEvent != null)
             {
                 EventNotPickedValidationMessage.Visibility = Visibility.Collapsed;
-                await EditPlaceViewModel.RemoveEventFromBusiness(removeEvent);
 
                 EditPlaceViewModel.BusinessViewModel.Events.Remove(removeEvent);
+                await EditPlaceViewModel.RemoveEventFromBusiness(removeEvent);
                 Notification.Show(5000);
             }
             else
@@ -133,9 +132,10 @@ namespace Windows_UWP.Views
             if (removePromotion != null)
             {
                 PromotionNotPickedValidationMessage.Visibility = Visibility.Collapsed;
-                await EditPlaceViewModel.RemovePromotionFromBusiness(removePromotion);
 
                 EditPlaceViewModel.BusinessViewModel.Promotions.Remove(removePromotion);
+
+                await EditPlaceViewModel.RemovePromotionFromBusiness(removePromotion);
                 Notification.Show(5000);
             }
             else
@@ -171,6 +171,7 @@ namespace Windows_UWP.Views
                 {
                     PromotionViewModel.Creation = DateTime.UtcNow;
                     EditPlaceViewModel.BusinessViewModel.Promotions.Add(PromotionViewModel);
+
                     await EditPlaceViewModel.AddPromotionToBusiness();
                     Notification.Show(5000);
                 }
@@ -191,8 +192,8 @@ namespace Windows_UWP.Views
             PromotionViewModel.Name = clickedMenuItem.Name;
             PromotionViewModel.Description = clickedMenuItem.Description;
             PromotionViewModel.PromotionType = clickedMenuItem.PromotionType;
-            PromotionViewModel.StartDate = clickedMenuItem.StartDate;
-            PromotionViewModel.EndDate = clickedMenuItem.EndDate;
+            PromotionViewModel.StartDateOffset = clickedMenuItem.StartDateOffset;
+            PromotionViewModel.EndDateOffset = clickedMenuItem.EndDateOffset;
             promotionType.SelectedItem = clickedMenuItem.PromotionType;
         }
 
@@ -392,9 +393,7 @@ namespace Windows_UWP.Views
                     valid = false;
                     PromotionDescriptionValidationMessage.Visibility = Visibility.Visible;
                 }
-                var startDateDateTimeOffset = DateTimeOffset.Parse(PromotionViewModel.StartDate);
-                var endDateDateTimeOffset = DateTimeOffset.Parse(PromotionViewModel.EndDate);
-                if (1 == DateTimeOffset.Compare(startDateDateTimeOffset, endDateDateTimeOffset))
+                if (1 == DateTimeOffset.Compare(PromotionViewModel.StartDateOffset, PromotionViewModel.EndDateOffset))
                 {
                     startDate.BorderBrush = new SolidColorBrush(Colors.Red);
                     endDate.BorderBrush = new SolidColorBrush(Colors.Red);
@@ -404,6 +403,16 @@ namespace Windows_UWP.Views
             }
             return valid;
 
+        }
+
+        private void StartDate_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        {
+            PromotionViewModel.StartDateOffset = e.NewDate;
+        }
+
+        private void EndDate_DateChanged(object sender, DatePickerValueChangedEventArgs e)
+        {
+            PromotionViewModel.EndDateOffset = e.NewDate;
         }
     }
 }

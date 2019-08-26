@@ -17,11 +17,19 @@ namespace Windows_UWP.ViewModels
 
         public bool SubStatus { get; set; }
 
+        private UserSettings UserSettings { get; set; }
+
+        public UserBusinessViewModel()
+        {
+            UserSettings = (UserSettings)Application.Current.Resources["UserSettings"];
+        }
+
         public async Task Subscribe()
         {
             try
             {
-                SubStatus = await ApiClient.Instance.PostSubscribeToBusiness(BusinessId);
+                if (UserSettings.IsLoggedIn)
+                    SubStatus = await ApiClient.Instance.PostSubscribeToBusiness(BusinessId);
             }
             catch (Exception ex)
             {
@@ -33,7 +41,8 @@ namespace Windows_UWP.ViewModels
         {
             try
             {
-                SubStatus = await ApiClient.Instance.GetUserBusinessForSubscription(BusinessId);
+                if (UserSettings.IsLoggedIn)
+                    SubStatus = await ApiClient.Instance.GetUserBusinessForSubscription(BusinessId);
             }
             catch (Exception ex)
             {

@@ -5,9 +5,13 @@
     xmlns:local="using:Windows_UWP.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:utils="using:Windows_UWP.Utils"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.Resources>
+        <utils:DateTimeOffsetToStringConverter x:Key="DateTimeOffsetToStringConverterKey"/>
+    </Page.Resources>
     <Grid Margin="20" ColumnSpacing="10" RowSpacing="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />

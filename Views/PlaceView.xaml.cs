@@ -8,7 +8,9 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Devices.Geolocation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Networking.BackgroundTransfer;
 using Windows.Services.Maps;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Maps;
@@ -17,6 +19,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows_UWP.Data;
 using Windows_UWP.Entities;
 using Windows_UWP.ViewModels;
 
@@ -83,6 +86,29 @@ namespace Windows_UWP.Views
             else
             {
                 subscribeButton.Content = "Subscribe";
+            }
+        }
+
+        private async void DownloadPDF(object sender, ItemClickEventArgs e)
+        {
+            var promotion = (PromotionViewModel)e.ClickedItem;
+            var savePicker = new Windows.Storage.Pickers.FileSavePicker();
+            savePicker.SuggestedStartLocation =
+                Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary;
+            // Dropdown of file types the user can save the file as
+            savePicker.FileTypeChoices.Add("PDF", new List<string>() { ".pdf" });
+            // Default file name if the user does not type one in or select a file to replace
+            savePicker.SuggestedFileName = $"Promotion_{promotion.Id}.pdf";
+
+            StorageFile file = await savePicker.PickSaveFileAsync();
+
+            try
+            {
+                await ApiClient.Instance.GetPDF(promotion.Id, file);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
             }
         }
 
