@@ -82,9 +82,9 @@
                     <GridView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="20">
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                                <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
-                                <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
+                                <TextBlock x:Name="eventName"  Text="{Binding Name}" FontWeight="Bold"/>
+                                <TextBlock x:Name="evenType" Text="{Binding Type}" TextWrapping="NoWrap"/>
+                                <TextBlock x:Name="eventDescription" Text="{Binding Description}" TextWrapping="NoWrap"/>
                             </StackPanel>
                         </DataTemplate>
                     </GridView.ItemTemplate>

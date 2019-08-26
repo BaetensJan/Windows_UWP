@@ -62,5 +62,8 @@
                 </DataTemplate>
         </ListView.ItemTemplate>
     </ListView>
+        <StackPanel HorizontalAlignment="Center" MinWidth="400" Margin="50">
+            <TextBlock Text="You aren't subscribed on businesses with a promotion or an event going on." x:Name="ValidationEmpty" Visibility="Collapsed"/>
+        </StackPanel>
     </Grid>
 </Page>

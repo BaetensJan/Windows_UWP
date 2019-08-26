@@ -36,6 +36,10 @@ namespace Windows_UWP.Views
             base.OnNavigatedTo(e);
             await EventsViewModel.LoadDataAsync();
             BusinessGridView.ItemsSource = new ObservableCollection<BusinessViewModel>(EventsViewModel.BusinessViewModel);
+            if(EventsViewModel.BusinessViewModel.Count() == 0)
+            {
+                ValidationEmpty.Visibility = Visibility.Visible;
+            }
         }
     }
 }

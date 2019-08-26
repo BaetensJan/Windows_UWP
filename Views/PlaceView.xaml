@@ -70,8 +70,8 @@
                                 <FlyoutBase.AttachedFlyout>
                                     <Flyout>
                                         <StackPanel>
-                                            <TextBlock Text="{Binding Name}" FontWeight="Bold"/>
-                                            <TextBlock Text="{Binding Type}" TextWrapping="NoWrap"/>
+                                            <TextBlock   Text="{Binding Name}" FontWeight="Bold"/>
+                                            <TextBlock  Text="{Binding Type}" TextWrapping="NoWrap"/>
                                             <TextBlock Text="{Binding Description}" TextWrapping="NoWrap"/>
                                         </StackPanel>
                                     </Flyout>

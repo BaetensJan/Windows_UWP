@@ -40,8 +40,11 @@ namespace Windows_UWP.Views
             {
                 EmailTextBox.ClearValue(TextBox.BorderBrushProperty);
                 PasswordTextBox.ClearValue(TextBox.BorderBrushProperty);
-
+                
+                
                 await ApiClient.Instance.PostLoginAsync(LoginViewModel);
+                EventViewModel = await ApiClient.Instance.GetEventsFromBusinessFromJWTAsync();
+                PromotionViewModel = await ApiClient.Instance.GetPromotionsFromBusinessFromJWTAsync();
 
                 CreatePromotionNotification();
                 CreateEventsNotification();

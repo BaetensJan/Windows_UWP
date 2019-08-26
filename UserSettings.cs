@@ -19,6 +19,7 @@ namespace Windows_UWP
                 OnPropertyChanged();
             }
         }
+        
 
         private bool _isLoggedIn = false;
         public bool IsLoggedIn {
