@@ -194,6 +194,11 @@ namespace Windows_UWP.Views
             PromotionViewModel.PromotionType = clickedMenuItem.PromotionType;
             PromotionViewModel.StartDateOffset = clickedMenuItem.StartDateOffset;
             PromotionViewModel.EndDateOffset = clickedMenuItem.EndDateOffset;
+            PromotionViewModel.EndDate = clickedMenuItem.EndDate;
+            PromotionViewModel.StartDate = clickedMenuItem.StartDate;
+            endDate.Date = clickedMenuItem.EndDateOffset;
+            startDate.Date = clickedMenuItem.StartDateOffset;
+            
             promotionType.SelectedItem = clickedMenuItem.PromotionType;
         }
 

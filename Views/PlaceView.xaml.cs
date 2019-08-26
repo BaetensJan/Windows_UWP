@@ -49,9 +49,7 @@ namespace Windows_UWP.Views
             try
             {
                 BusinessViewModel = (BusinessViewModel)e.Parameter;
-
-                //TODO: CHANGE THIS
-                BusinessViewModel.ImageUrl = "https://fashiongrabber.blob.core.windows.net/shop-2659/IMG_2953.JPG";
+                BusinessViewModel.ImageUri = new Uri(BusinessViewModel.ImageUrl);
                 UserBusinessViewModel.BusinessId = BusinessViewModel.Id;
                 await UserBusinessViewModel.CheckUserBusinessForSubscription();
                 checkSubscribeButton();
