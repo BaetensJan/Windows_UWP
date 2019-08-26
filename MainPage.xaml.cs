@@ -77,5 +77,9 @@ namespace Windows_UWP
         {
             MainFrame.Navigate(typeof(EditPlaceView));
         }
+        private void OnSeeAbboneePromotionsAndEvents(object sender, TappedRoutedEventArgs e)
+        {
+            MainFrame.Navigate(typeof(EventsView));
+        }
     }
 }

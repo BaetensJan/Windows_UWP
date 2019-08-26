@@ -138,6 +138,7 @@
     <Compile Include="Utils\BooleanToVisibilityConverter.cs" />
     <Compile Include="ViewModels\BusinessViewModel.cs" />
     <Compile Include="ViewModels\EditPlaceViewModel.cs" />
+    <Compile Include="ViewModels\EventsViewModel.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\PlacesViewModel.cs" />
@@ -146,6 +147,9 @@
     <Compile Include="ViewModels\UserBusinessViewModel.cs" />
     <Compile Include="Views\EditPlaceView.xaml.cs">
       <DependentUpon>EditPlaceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventsView.xaml.cs">
+      <DependentUpon>EventsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
@@ -185,6 +189,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\EditPlaceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

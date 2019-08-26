@@ -126,6 +126,17 @@ namespace Windows_UWP.Data
             return JsonConvert.DeserializeObject<BusinessViewModel>(json);
         }
 
+        public async Task<List<BusinessViewModel>> GetAbboneeBusinessByEmailFromJWTAsync()
+        {
+            if (!UserSettings.IsLoggedIn)
+            {
+                throw new ArgumentException("Not logged In");
+            }
+
+            var jsonEvent = await client.GetStringAsync($"{apiUrl}/Account/GetBusinessesWhereUserIsAnAbbonee");
+            return JsonConvert.DeserializeObject<List<BusinessViewModel>>(jsonEvent);
+        }
+
         public async Task PostBusinessFromJWTAsync(BusinessViewModel businessViewModel)
         {
             if (!UserSettings.IsLoggedIn)
